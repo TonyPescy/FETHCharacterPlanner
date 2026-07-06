@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-URL = "https://serenesforest.net/three-houses/classes/growth-rates/"
+URL = ""
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
-def scrape_class_growths():
+def scrape_character_max_stats():
     res = requests.get(URL, headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
 
@@ -50,12 +50,12 @@ def scrape_class_growths():
 
 
 def main():
-    data = scrape_class_growths()
+    data = scrape_character_max_stats()
 
     df = pd.DataFrame(data)
 
-    df.to_csv("fe3h_class_growth_rates.csv", index=False)
-    df.to_json("fe3h_class_growth_rates.json", orient="records", indent=2)
+    df.to_csv("fe3h_character_max_stats.csv", index=False)
+    df.to_json("fe3h_character_max_stats.json", orient="records", indent=2)
 
     print(f"Saved {len(df)} classes!")
 
