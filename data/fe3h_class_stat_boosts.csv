@@ -1,0 +1,53 @@
+name,HP,Str,Mag,Dex,Spd,Lck,Def,Res,Cha
+Noble,0,0,0,0,0,0,0,0,0
+Commoner,0,0,0,0,0,0,0,0,0
+Dancer,0,1,0,3,3,0,2,1,2
+Enlightened One,1,2,3,1,1,1,2,2,1
+Armored Lord,5,0,0,0,-3,0,5,0,2
+High Lord,3,1,0,0,3,0,1,0,2
+Wyvern Master,2,1,0,3,1,0,1,0,2
+Emperor,8,0,0,0,-4,1,8,0,2
+Great Lord,5,2,0,0,4,1,1,0,2
+Barbarossa,3,3,0,5,2,0,2,0,2
+Myrmidon,0,0,0,0,1,0,0,0,0
+Soldier,0,0,0,1,0,0,0,0,0
+Fighter,0,1,0,0,0,0,0,0,0
+Monk,0,0,0,0,0,0,0,1,0
+Lord,1,0,0,0,1,1,0,0,2
+Mercenary,1,1,0,0,1,0,0,0,0
+Thief,0,0,0,2,2,0,0,0,0
+Armored Knight,3,0,0,0,-2,0,4,-1,0
+Cavalier,1,1,0,2,-2,0,1,0,0
+Brigand,2,2,0,0,0,0,0,0,0
+Archer,0,0,0,2,0,2,0,0,0
+Brawler,1,0,0,2,2,0,0,-1,0
+Mage,0,0,1,1,0,0,0,2,0
+Dark Mage,0,0,2,1,0,0,0,1,0
+Priest,0,0,0,1,0,0,0,3,0
+Pegasus Knight,0,0,0,2,2,0,0,2,0
+Hero,3,2,0,0,2,1,1,0,0
+Swordmaster,1,2,0,1,4,0,1,0,0
+Assassin,0,0,0,3,5,1,0,0,0
+Fortress Knight,5,0,0,0,-6,0,10,0,0
+Paladin,2,2,0,2,-2,0,2,2,0
+Wyvern Rider,1,1,0,1,2,0,2,0,0
+Warrior,3,3,0,0,1,1,1,0,0
+Sniper,0,1,0,5,0,3,0,0,0
+Grappler,2,1,0,3,3,0,1,-1,0
+Warlock,0,0,3,1,1,0,0,4,0
+Dark Bishop,0,0,4,2,0,0,0,3,0
+Bishop,1,0,2,1,0,0,0,5,0
+Falcon Knight,0,1,0,4,2,0,0,4,0
+Wyvern Lord,2,2,0,1,2,0,3,0,0
+Mortal Savant,1,1,2,1,1,0,2,2,0
+Great Knight,5,1,0,0,-2,0,2,0,0
+Bow Knight,2,1,0,3,-2,1,1,0,0
+Dark Knight,1,1,2,2,-2,0,1,3,0
+Holy Knight,2,1,1,2,-2,0,1,4,0
+War Master,3,5,0,0,2,1,1,0,0
+Gremory,0,0,5,2,1,0,0,4,2
+Trickster,0,0,0,3,4,3,0,1,0
+War Monk/Cleric,3,2,0,1,0,0,1,1,0
+Dark Flier,0,0,0,3,2,0,0,3,0
+Valkyrie,1,0,4,0,-2,0,0,1,2
+Death Knight,5,1,0,0,-2,0,1,3,0
