@@ -1,0 +1,254 @@
+[
+  {
+    "name":"Protagonist",
+    "Starting Class":"Commoner",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Edelgard",
+    "Starting Class":"Noble",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Hubert",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Dorothea",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Ferdinand",
+    "Starting Class":"Noble",
+    "Beginner Class":"Soldier",
+    "Intermediate Class":"Cavalier"
+  },
+  {
+    "name":"Bernadetta",
+    "Starting Class":"Noble",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Archer"
+  },
+  {
+    "name":"Caspar",
+    "Starting Class":"Noble",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Brigand"
+  },
+  {
+    "name":"Petra",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Myrmidon",
+    "Intermediate Class":"Thief"
+  },
+  {
+    "name":"Linhardt",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Priest"
+  },
+  {
+    "name":"Dimitri",
+    "Starting Class":"Noble",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Dedue",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Armored Knight"
+  },
+  {
+    "name":"Felix",
+    "Starting Class":"Noble",
+    "Beginner Class":"Myrmidon",
+    "Intermediate Class":"Mercenary"
+  },
+  {
+    "name":"Mercedes",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Priest"
+  },
+  {
+    "name":"Ashe",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Archer"
+  },
+  {
+    "name":"Annette",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Sylvain",
+    "Starting Class":"Noble",
+    "Beginner Class":"Soldier",
+    "Intermediate Class":"Cavalier"
+  },
+  {
+    "name":"Ingrid",
+    "Starting Class":"Noble",
+    "Beginner Class":"Soldier",
+    "Intermediate Class":"Pegasus Knight"
+  },
+  {
+    "name":"Claude",
+    "Starting Class":"Noble",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Lorenz",
+    "Starting Class":"Noble",
+    "Beginner Class":"Soldier",
+    "Intermediate Class":"Cavalier"
+  },
+  {
+    "name":"Hilda",
+    "Starting Class":"Noble",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Brigand"
+  },
+  {
+    "name":"Raphael",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Brawler"
+  },
+  {
+    "name":"Lysithea",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Ignatz",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Archer"
+  },
+  {
+    "name":"Marianne",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Priest"
+  },
+  {
+    "name":"Leonie",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Soldier",
+    "Intermediate Class":"Cavalier"
+  },
+  {
+    "name":"Rhea (NPC)",
+    "Starting Class":"Archbishop",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Manuela",
+    "Starting Class":"Priest",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Hanneman",
+    "Starting Class":"Mage",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Seteth",
+    "Starting Class":"Wyvern Rider",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Flayn",
+    "Starting Class":"Priest",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Cyril",
+    "Starting Class":"Commoner",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Jeralt (NPC)",
+    "Starting Class":"Paladin",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Catherine",
+    "Starting Class":"Swordmaster",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Alois",
+    "Starting Class":"Warrior",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Gilbert",
+    "Starting Class":"Fortress Knight",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Shamir",
+    "Starting Class":"Sniper",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Yuri",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Myrmidon",
+    "Intermediate Class":"Thief"
+  },
+  {
+    "name":"Balthus",
+    "Starting Class":"Noble",
+    "Beginner Class":"Fighter",
+    "Intermediate Class":"Brawler"
+  },
+  {
+    "name":"Constance",
+    "Starting Class":"Noble",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Hapi",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Monk",
+    "Intermediate Class":"Mage"
+  },
+  {
+    "name":"Jeritza",
+    "Starting Class":"Death Knight",
+    "Beginner Class":"\u2013",
+    "Intermediate Class":"\u2013"
+  },
+  {
+    "name":"Anna",
+    "Starting Class":"Commoner",
+    "Beginner Class":"Myrmidon",
+    "Intermediate Class":"Thief"
+  }
+]

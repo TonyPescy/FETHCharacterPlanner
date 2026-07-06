@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-URL = "https://serenesforest.net/three-houses/characters/maximum-stats/"
+URL = "https://serenesforest.net/three-houses/characters/base-stats/"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
-def scrape_character_max_stats():
+def scrape_character_base_stats():
     res = requests.get(URL, headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
 
@@ -50,12 +50,12 @@ def scrape_character_max_stats():
 
 
 def main():
-    data = scrape_character_max_stats()
+    data = scrape_character_base_stats()
 
     df = pd.DataFrame(data)
 
-    df.to_csv("fe3h_character_max_stats.csv", index=False)
-    df.to_json("fe3h_character_max_stats.json", orient="records", indent=2)
+    df.to_csv("fe3h_character_base_stats.csv", index=False)
+    df.to_json("fe3h_character_base_stats.json", orient="records", indent=2)
 
     print(f"Saved {len(df)} Characters!")
 

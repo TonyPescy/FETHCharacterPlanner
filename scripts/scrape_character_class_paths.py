@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-URL = "https://serenesforest.net/three-houses/characters/maximum-stats/"
+URL = "https://serenesforest.net/three-houses/characters/other-data/"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
-def scrape_character_max_stats():
+def scrape_character_class_path():
     res = requests.get(URL, headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
 
@@ -29,33 +29,27 @@ def scrape_character_max_stats():
             #    if cols[i] == "":
             #        cols[i] = "0"
 
-            # Expect: Name + 9 stats
-            if len(cols) >= 10:
+            # Expect: Name + 3 stats
+            if len(cols) >= 4:
                 name = cols[0]
 
                 data.append({
                     "name": name,
-                    "HP": cols[1],
-                    "Str": cols[2],
-                    "Mag": cols[3],
-                    "Dex": cols[4],
-                    "Spd": cols[5],
-                    "Lck": cols[6],
-                    "Def": cols[7],
-                    "Res": cols[8],
-                    "Cha": cols[9],
+                    "Starting Class": cols[1],
+                    "Beginner Class": cols[2],
+                    "Intermediate Class": cols[3]
                 })
 
     return data
 
 
 def main():
-    data = scrape_character_max_stats()
+    data = scrape_character_class_path()
 
     df = pd.DataFrame(data)
 
-    df.to_csv("fe3h_character_max_stats.csv", index=False)
-    df.to_json("fe3h_character_max_stats.json", orient="records", indent=2)
+    df.to_csv("fe3h_character_class_path.csv", index=False)
+    df.to_json("fe3h_character_class_path.json", orient="records", indent=2)
 
     print(f"Saved {len(df)} Characters!")
 
