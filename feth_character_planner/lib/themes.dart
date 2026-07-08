@@ -29,10 +29,10 @@ class AppThemeColors {
 class AppThemes {
   static const royalPurple = AppThemeColors(
     background: Color.fromRGBO(63, 28, 87, 0.85),
-    surface: Color(0xFF4F2A6B),
-    primary: Color(0xFF6A3E9E),
-    secondary: Color(0xFF8B5FBF),
-    accent: Color.fromARGB(255, 255, 201, 39),
+    surface: Color.fromARGB(255, 255, 0, 0),
+    primary: Color.fromARGB(255, 200, 255, 0),
+    secondary: Color.fromARGB(255, 0, 0, 0),
+    accent: Color.fromRGBO(255, 255, 255, 1),
     text: Colors.white,
     icon: Colors.white70,
   );
@@ -70,26 +70,30 @@ class AppThemes {
 
 // Theme manager for tracking user theme upon reloading and changing it
 class ThemeManager extends ChangeNotifier {
-  static AppThemeColors currentTheme = AppThemes.royalPurple;
+  AppThemeColors currentTheme = AppThemes.royalPurple;
 
   static const _themeKey = 'selectedTheme';
 
-  static Future<void> loadTheme() async {
+  Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
 
     final themeName = prefs.getString(_themeKey) ?? 'royalPurple';
 
     currentTheme =
         AppThemes.themes[themeName] ?? AppThemes.royalPurple;
+
+    notifyListeners();
   }
 
-  static Future<void> setTheme(String themeName) async {
+  Future<void> setTheme(String themeName) async {
     final prefs = await SharedPreferences.getInstance();
 
     currentTheme =
         AppThemes.themes[themeName] ?? AppThemes.royalPurple;
 
     await prefs.setString(_themeKey, themeName);
+
+    notifyListeners();
   }
 }
 // ThemeManager End
@@ -97,9 +101,3 @@ class ThemeManager extends ChangeNotifier {
 // CHANGE THEME CODE BELOW
 //await ThemeManager.setTheme('ocean');
 //setState(() {});
-
-class AppColors {
-  static const background = Color.fromRGBO(63, 28, 87, 0.85);
-  static const accent = Color.fromARGB(255, 255, 201, 39);
-
-}

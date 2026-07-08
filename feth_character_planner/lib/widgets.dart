@@ -4,7 +4,6 @@ import 'package:feth_character_planner/themes.dart';
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title; // Current page name
-
   // List containing pages that will confirm that the user wishes to go to homepage - Used on editing pages (create character, create house, etc...)
   final confirmMsgPages = [
     "none",
@@ -19,9 +18,10 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.watch<ThemeManager>().currentTheme;
     return SafeArea(
       child: Container(
-        color: AppColors.background,
+        color: theme.background,
         height: 56,
         child: Row(
           children: [
@@ -58,12 +58,14 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
             Expanded(
               flex: 1,
               child: HoverIconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.settings,
                   size: 36,
-                  color: AppColors.accent,
+                  color: theme.accent,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  debugPrint("Settings button pressed, accent color: ${theme.accent}");
+                },
               )
             ),
           ],
