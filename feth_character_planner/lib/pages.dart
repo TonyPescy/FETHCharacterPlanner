@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 
 // Homepage
 class MyHomePage extends StatelessWidget {
+  // routeName for current page checking
+  static const routeName = "/home";
+  
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();

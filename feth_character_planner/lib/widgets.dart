@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:feth_character_planner/constants.dart';
+import 'package:feth_character_planner/themes.dart';
 
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String title; // Current page name
 
-  const MyTopBar({
+  // List containing pages that will confirm that the user wishes to go to homepage - Used on editing pages (create character, create house, etc...)
+  final confirmMsgPages = [
+    "none",
+    "noneTwo"
+    // USED AS SUCH: EditPage1.routeName, EditPage2.routeName...
+  ];
+
+  MyTopBar({
     super.key,
     required this.title,
   });
@@ -27,7 +34,11 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 36,
                   height: 36,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // Takes you to the homepage when pressed
+                  // Depending on the page you are on, it will ask for confirmation (used for editing pages etc)
+                  
+                },
               )
               ),
 
@@ -50,6 +61,7 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: const Icon(
                   Icons.settings,
                   size: 36,
+                  color: AppColors.accent,
                 ),
                 onPressed: () {},
               )

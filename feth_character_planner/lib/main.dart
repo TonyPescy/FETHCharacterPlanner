@@ -2,9 +2,14 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:feth_character_planner/pages.dart';
+import 'themes.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //await ThemeManager.loadTheme();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
