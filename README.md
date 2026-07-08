@@ -9,35 +9,35 @@ CREST OF FLAME NEEDS TO BE RECOLORED TO MATCH ALL THEMES - NEEDS SOME EDIT SOFTW
 
 ## Themes
 
-#### Default
+### Default
 
-###### FETH Purple
+#### FETH Purple
 short Descriptions
 
-#### Generic
+### Generic
 
-###### Light
+#### Light
 short Descriptions
 
-###### Dark
+#### Dark
 short Descriptions
 
-#### Houses
+### Houses
 
-###### Ashen Wolves
+#### Ashen Wolves
 short Descriptions
 
-###### Black Eagles
+#### Black Eagles
 short Descriptions
 
-###### Black Eagles (Alternative)
+#### Black Eagles (Alternative)
 short Descriptions
 
-###### Blue Lions
+#### Blue Lions
 short Descriptions
 
-###### Blue Lions (Alternative)
+#### Blue Lions (Alternative)
 short Descriptions
 
-###### Golden Deer
+#### Golden Deer
 short Descriptions

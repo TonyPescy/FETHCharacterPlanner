@@ -32,8 +32,8 @@ class AppThemes {
     surface: Color.fromARGB(255, 255, 0, 0),
     primary: Color.fromARGB(255, 200, 255, 0),
     secondary: Color.fromARGB(255, 0, 0, 0),
-    accent: Color.fromRGBO(255, 255, 255, 1),
-    text: Colors.white,
+    accent: Color.fromRGBO(22, 49, 201, 1),
+    text: Color.fromARGB(255, 58, 8, 8),
     icon: Colors.white70,
   );
 
@@ -98,6 +98,6 @@ class ThemeManager extends ChangeNotifier {
 }
 // ThemeManager End
 
-// CHANGE THEME CODE BELOW
+// CODE BELOW is used to change the theme of the app
 //await ThemeManager.setTheme('ocean');
 //setState(() {});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:feth_character_planner/themes.dart';
+import 'package:provider/provider.dart';
 
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {

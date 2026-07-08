@@ -2,6 +2,7 @@ import 'package:feth_character_planner/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:feth_character_planner/main.dart';
 import 'package:provider/provider.dart';
+import 'package:feth_character_planner/themes.dart';
 // import 'package:feth_character_planner/constants.dart';
 
 // Homepage
@@ -25,6 +26,7 @@ class MyHomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               print('button pressed!');
+              context.read<ThemeManager>().setTheme("royalPurple");
             },
             child: Text('Next'),
           ),  
