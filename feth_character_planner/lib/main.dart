@@ -7,6 +7,7 @@ import 'themes.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Get chosen theme
   final themeManager = ThemeManager();
   await themeManager.loadTheme();
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Fire Emblem Three Houses Character Planner',
         home: MyHomePage(),
+        
       ),
     );
   }

@@ -27,15 +27,16 @@ class AppThemeColors {
 // AppThemes Starts
 // Creates the themes to be used for the app
 class AppThemes {
+
   static const royalPurple = AppThemeColors(
-    background: Color.fromRGBO(63, 28, 87, 0.85),
-    surface: Color.fromARGB(255, 255, 0, 0),
-    primary: Color.fromARGB(255, 200, 255, 0),
-    secondary: Color.fromARGB(255, 0, 0, 0),
-    accent: Color.fromRGBO(22, 49, 201, 1),
-    text: Color.fromARGB(255, 58, 8, 8),
-    icon: Colors.white70,
-  );
+    background: Color(0xFF1A1028), // Deep academy/night purple
+    surface: Color(0xFF2A1745),    // Rich violet surface
+    primary: Color(0xFF6B4FA3),    // Royal purple
+    secondary: Color(0xFFD8C7FF),  // Soft lavender highlight
+    accent: Color(0xFFE5B84B),     // Crest-like gold
+    text: Color(0xFFF8F4FF),       // Warm white
+    icon: Color(0xFFD9C9F2),       // Muted lavender icons
+    );
 
   static const ocean = AppThemeColors(
     background: Color(0xFF0D3B66),
@@ -56,6 +57,16 @@ class AppThemes {
     text: Colors.white,
     icon: Colors.white70,
   );
+
+  static const fodlanWar = AppThemeColors(
+  background: Color(0xFF120B1F),
+  surface: Color(0xFF211334),
+  primary: Color(0xFF4B2E83),
+  secondary: Color(0xFFA98EDB),
+  accent: Color(0xFFC9A227),
+  text: Color(0xFFF5EFFF),
+  icon: Color(0xFFBFA8E6),
+);
 
   // Add 4–5 more themes...
 
@@ -79,8 +90,7 @@ class ThemeManager extends ChangeNotifier {
 
     final themeName = prefs.getString(_themeKey) ?? 'royalPurple';
 
-    currentTheme =
-        AppThemes.themes[themeName] ?? AppThemes.royalPurple;
+    currentTheme = AppThemes.themes[themeName] ?? AppThemes.royalPurple;
 
     notifyListeners();
   }
@@ -88,8 +98,7 @@ class ThemeManager extends ChangeNotifier {
   Future<void> setTheme(String themeName) async {
     final prefs = await SharedPreferences.getInstance();
 
-    currentTheme =
-        AppThemes.themes[themeName] ?? AppThemes.royalPurple;
+    currentTheme = AppThemes.themes[themeName] ?? AppThemes.royalPurple;
 
     await prefs.setString(_themeKey, themeName);
 
@@ -101,3 +110,48 @@ class ThemeManager extends ChangeNotifier {
 // CODE BELOW is used to change the theme of the app
 //await ThemeManager.setTheme('ocean');
 //setState(() {});
+
+// Appsizes start
+// Controls sizes for app
+class AppSizes {
+  // Topbar height as percentage of screen height
+  static double topBarHeight(BuildContext context) => (MediaQuery.of(context).size.height * 0.08).clamp(56.0, 120.0);  // 8% of screen height - clamped to avoid massive topbars on larger screens
+
+  // Icon size inside topbar
+  static double topBarIcon(BuildContext context) => topBarHeight(context) * 1;  // 100% of topbar height to avoid it looking like a blob
+
+  // Settings icon size
+  static double settingsIcon(BuildContext context) => topBarHeight(context) * 0.5;  // 50% of topbar height
+}
+// AppSizes End
+
+// FontSize start
+// Used to scale font sizes for differnt devices used
+class FontSize {
+  static double scale(
+    BuildContext context,
+    double size, {
+    double min = 10,
+    double max = 48,
+  }) {
+    final width = MediaQuery.of(context).size.width;
+
+    const baseWidth = 375.0;
+
+    final scaled = size * (width / baseWidth);
+
+    return scaled.clamp(min, max);
+  }
+}
+// Fontsize End
+
+// App text sizing presets
+class AppTextSizes {
+  static double title(BuildContext context) => FontSize.scale(context, 28, max: 42);
+
+  static double heading(BuildContext context) => FontSize.scale(context, 20, max: 30);
+
+  static double body(BuildContext context) => FontSize.scale(context, 16, max: 22);
+
+  static double caption(BuildContext context) => FontSize.scale(context, 12, max: 16);
+}
