@@ -75,81 +75,120 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
             // Right - Settings
             Expanded(
               flex: 1,
-              child: MenuAnchor(
-                style: MenuStyle(
-                  backgroundColor: WidgetStatePropertyAll(theme.surface),
-                  surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
-                  elevation: const WidgetStatePropertyAll(8),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              child: MenuTheme(
+                data: MenuThemeData(
+                  style: MenuStyle(
+                    backgroundColor: WidgetStatePropertyAll(theme.primary),
+                    surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+                    elevation: const WidgetStatePropertyAll(8),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                   ),
                 ),
 
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      debugPrint("Theme");
-                    },
-                    child: Text(
-                      "Themes", 
-                      style: TextStyle(
-                        fontSize: AppTextSizes.body(context),
-                        color: theme.text
+                child: MenuAnchor(
+                  menuChildren: [
+                    SubmenuButton(
+                      // This styles the "Themes" row itself
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(theme.primary),
+                        foregroundColor: WidgetStatePropertyAll(theme.text),
+                      ),
+
+                      menuChildren: context.read<ThemeManager>().getThemes().entries.map((entry) {
+                        return MenuItemButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(theme.primary),
+                            foregroundColor: WidgetStatePropertyAll(theme.text),
+                          ),
+
+                          onPressed: () {
+                            context.read<ThemeManager>().setTheme(entry.key);
+                          },
+
+                          child: Text(
+                            entry.key,
+                            style: TextStyle(
+                              fontSize: AppTextSizes.body(context),
+                              color: theme.text,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+
+                      child: Text(
+                        "Themes",
+                        style: TextStyle(
+                          fontSize: AppTextSizes.body(context),
+                          color: theme.text,
+                        ),
                       ),
                     ),
-                  ),
 
-                  MenuItemButton(
-                    onPressed: () {
-                      debugPrint("Settings");
-                    },
-                    child: Text(
-                      "Settings",
-                      style: TextStyle(
-                        fontSize: AppTextSizes.body(context),
-                        color: theme.text
-                      ),  
-                    ),
-                  ),
-
-                  const Divider(height: 1),
-
-                  MenuItemButton(
-                    onPressed: () {
-                      debugPrint("About");
-                    },
-                    child: Text(
-                      "About",
-                      style: TextStyle(
-                        fontSize: AppTextSizes.body(context),
-                        color: theme.text
+                    MenuItemButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(theme.primary),
+                        foregroundColor: WidgetStatePropertyAll(theme.text),
                       ),
-                    ),
-                  ),
-                ],
 
-                builder: (context, controller, child) {
-                  return SizedBox(
-                    //width: height,
-                    height: height,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      icon: Icon(
-                        Icons.settings,
-                        color: theme.accent,
-                        size: AppSizes.settingsIcon(context)
-                      ),
                       onPressed: () {
-                        controller.isOpen
-                            ? controller.close()
-                            : controller.open();
+                        debugPrint("Settings");
                       },
+
+                      child: Text(
+                        "Settings",
+                        style: TextStyle(
+                          fontSize: AppTextSizes.body(context),
+                          color: theme.text,
+                        ),
+                      ),
                     ),
-                  );
-                },
+
+                    const Divider(height: 1),
+
+                    MenuItemButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(theme.primary),
+                        foregroundColor: WidgetStatePropertyAll(theme.text),
+                      ),
+
+                      onPressed: () {
+                        debugPrint("About");
+                      },
+
+                      child: Text(
+                        "About",
+                        style: TextStyle(
+                          fontSize: AppTextSizes.body(context),
+                          color: theme.text,
+                        ),
+                      ),
+                    ),
+                  ],
+
+                  builder: (context, controller, child) {
+                    return SizedBox(
+                      height: height,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: Icon(
+                          Icons.settings,
+                          color: theme.icon,
+                          size: AppSizes.settingsIcon(context),
+                        ),
+                        onPressed: () {
+                          controller.isOpen
+                              ? controller.close()
+                              : controller.open();
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],

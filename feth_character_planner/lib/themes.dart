@@ -32,10 +32,10 @@ class AppThemes {
     background: Color(0xFF1A1028), // Deep academy/night purple
     surface: Color(0xFF2A1745),    // Rich violet surface
     primary: Color(0xFF6B4FA3),    // Royal purple
-    secondary: Color(0xFFD8C7FF),  // Soft lavender highlight
+    secondary: Color.fromARGB(255, 68, 49, 110),  // Soft lavender highlight
     accent: Color(0xFFE5B84B),     // Crest-like gold
     text: Color(0xFFF8F4FF),       // Warm white
-    icon: Color(0xFFD9C9F2),       // Muted lavender icons
+    icon: Color.fromARGB(255, 207, 189, 236),       // Muted lavender icons
     );
 
   static const ocean = AppThemeColors(
@@ -75,6 +75,7 @@ class AppThemes {
     'royalPurple': royalPurple,
     'ocean': ocean,
     'forest': forest,
+    'fodlanWar': fodlanWar
   };
 }
 // AppThemes End
@@ -104,6 +105,11 @@ class ThemeManager extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Map<String, AppThemeColors> getThemes() {
+    return AppThemes.themes;
+  }
+
 }
 // ThemeManager End
 
