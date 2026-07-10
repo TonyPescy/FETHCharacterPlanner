@@ -72,10 +72,10 @@ class AppThemes {
 
   // IDs used to track user theme upon reloading the app
   static const Map<String, AppThemeColors> themes = {
-    'royalPurple': royalPurple,
-    'ocean': ocean,
-    'forest': forest,
-    'fodlanWar': fodlanWar
+    'Royal Purple': royalPurple,
+    'Ocean': ocean,
+    'Forest': forest,
+    'Fodlan War': fodlanWar
   };
 }
 // AppThemes End
@@ -89,7 +89,7 @@ class ThemeManager extends ChangeNotifier {
   Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final themeName = prefs.getString(_themeKey) ?? 'royalPurple';
+    final themeName = prefs.getString(_themeKey) ?? 'Royal Purple';
 
     currentTheme = AppThemes.themes[themeName] ?? AppThemes.royalPurple;
 
@@ -137,7 +137,7 @@ class FontSize {
   static double scale(
     BuildContext context,
     double size, {
-    double min = 10,
+    double min = 8,
     double max = 48,
   }) {
     final width = MediaQuery.of(context).size.width;
@@ -153,11 +153,11 @@ class FontSize {
 
 // App text sizing presets
 class AppTextSizes {
-  static double title(BuildContext context) => FontSize.scale(context, 28, max: 42);
+  static double title(BuildContext context) => FontSize.scale(context, 20, max: 42);
 
-  static double heading(BuildContext context) => FontSize.scale(context, 20, max: 30);
+  static double heading(BuildContext context) => FontSize.scale(context, 16, max: 30);
 
-  static double body(BuildContext context) => FontSize.scale(context, 16, max: 22);
+  static double body(BuildContext context) => FontSize.scale(context, 12, max: 22);
 
-  static double caption(BuildContext context) => FontSize.scale(context, 12, max: 16);
+  static double caption(BuildContext context) => FontSize.scale(context, 8, max: 16);
 }

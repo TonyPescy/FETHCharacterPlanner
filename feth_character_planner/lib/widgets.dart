@@ -75,123 +75,181 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
             // Right - Settings
             Expanded(
               flex: 1,
-              child: MenuTheme(
-                data: MenuThemeData(
-                  style: MenuStyle(
-                    backgroundColor: WidgetStatePropertyAll(theme.primary),
-                    surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
-                    elevation: const WidgetStatePropertyAll(8),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
 
-              
+                  final menuWidth = constraints.maxWidth;
+                  final menuHeight = height * 0.5;   // Half the height of the topbar
+                  //final numOfMenuItems = 3;         // Settings, themes, about
+                  //final numOfMenuDividers = 1;      // 1 divider
 
-                child: MenuAnchor(
-                  menuChildren: [
-                    
-                    MenuItemButton(
-                      style: ButtonStyle(
+                  debugPrint("Topbar height: $height");
+                  debugPrint("Menu width: ${constraints.maxWidth}");
+
+                  return MenuTheme(
+                    data: MenuThemeData(
+                      style: MenuStyle(
                         backgroundColor: WidgetStatePropertyAll(theme.primary),
-                        foregroundColor: WidgetStatePropertyAll(theme.text),
-                      ),
+                        surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+                        elevation: const WidgetStatePropertyAll(8),
 
-                      onPressed: () {
-                        debugPrint("Settings");
-                      },
-
-                      child: Text(
-                        "Settings",
-                        style: TextStyle(
-                          fontSize: AppTextSizes.body(context),
-                          color: theme.text,
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       ),
                     ),
 
-                    SubmenuButton(
-                      // This styles the "Themes" row itself
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(theme.primary),
-                        foregroundColor: WidgetStatePropertyAll(theme.text),
-                      ),
+                    child: MenuAnchor(
+                      // Center menu underneath settings icon
+                      alignmentOffset: Offset(0, -MediaQuery.of(context).padding.top),
 
-                      menuChildren: context.read<ThemeManager>().getThemes().entries.map((entry) {
-                        return MenuItemButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(theme.primary),
-                            foregroundColor: WidgetStatePropertyAll(theme.text),
-                          ),
+                      menuChildren: [
+                        SizedBox(
+                            width: menuWidth,
+                            
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
 
-                          onPressed: () {
-                            context.read<ThemeManager>().setTheme(entry.key);
-                          },
+                              children: [
 
-                          child: Text(
-                            entry.key,
-                            style: TextStyle(
-                              fontSize: AppTextSizes.body(context),
-                              color: theme.text,
+                                MenuItemButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(theme.primary),
+                                    foregroundColor: WidgetStatePropertyAll(theme.text),
+
+                                    minimumSize: WidgetStatePropertyAll(
+                                      Size(menuWidth, menuHeight),
+                                    ),
+                                  ),
+
+                                  onPressed: () {
+                                    debugPrint("Settings");
+                                  },
+
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Settings",
+                                      style: TextStyle(
+                                        fontSize: AppTextSizes.caption(context),
+                                        color: theme.text,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+
+                                SubmenuButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(theme.primary),
+                                    foregroundColor: WidgetStatePropertyAll(theme.text),
+
+                                    minimumSize: WidgetStatePropertyAll(
+                                      Size(menuWidth, menuHeight),
+                                    ),
+                                  ),
+
+                                  menuChildren: context.read<ThemeManager>().getThemes().entries.map((entry) {
+
+                                    return MenuItemButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(theme.primary),
+                                        foregroundColor: WidgetStatePropertyAll(theme.text),
+
+                                        minimumSize: WidgetStatePropertyAll(
+                                          Size(menuWidth, menuHeight),
+                                        ),
+                                      ),
+
+                                      onPressed: () {
+                                        context.read<ThemeManager>().setTheme(entry.key);
+                                      },
+
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          entry.key,
+                                          style: TextStyle(
+                                            fontSize: AppTextSizes.caption(context),
+                                            color: theme.text,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+
+                                  }).toList(),
+
+                                  child: Text(
+                                    "Themes",
+                                    style: TextStyle(
+                                      fontSize: AppTextSizes.caption(context),
+                                      color: theme.text,
+                                    ),
+                                  ),
+                                ),
+
+
+                                const Divider(height: 1),
+
+
+                                MenuItemButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(theme.primary),
+                                    foregroundColor: WidgetStatePropertyAll(theme.text),
+
+                                    minimumSize: WidgetStatePropertyAll(
+                                      Size(menuWidth, menuHeight),
+                                    ),
+                                  ),
+
+                                  onPressed: () {
+                                    debugPrint("About");
+                                  },
+
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "About",
+                                      style: TextStyle(
+                                        fontSize: AppTextSizes.caption(context),
+                                        color: theme.text,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                      ],
+
+
+                      builder: (context, controller, child) {
+                        return SizedBox(
+                          height: height,
+
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+
+                            icon: Icon(
+                              Icons.settings,
+                              color: theme.icon,
+                              size: AppSizes.settingsIcon(context),
+                            ),
+
+                            onPressed: () {
+                              controller.isOpen
+                                  ? controller.close()
+                                  : controller.open();
+                            },
+                          ),
                         );
-                      }).toList(),
-
-                      child: Text(
-                        "Themes",
-                        style: TextStyle(
-                          fontSize: AppTextSizes.body(context),
-                          color: theme.text,
-                        ),
-                      ),
-                    ),
-
-                    const Divider(height: 1),
-
-                    MenuItemButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(theme.primary),
-                        foregroundColor: WidgetStatePropertyAll(theme.text),
-                      ),
-
-                      onPressed: () {
-                        debugPrint("About");
                       },
-
-                      child: Text(
-                        "About",
-                        style: TextStyle(
-                          fontSize: AppTextSizes.body(context),
-                          color: theme.text,
-                        ),
-                      ),
                     ),
-                  ],
-
-                  builder: (context, controller, child) {
-                    return SizedBox(
-                      height: height,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        icon: Icon(
-                          Icons.settings,
-                          color: theme.icon,
-                          size: AppSizes.settingsIcon(context),
-                        ),
-                        onPressed: () {
-                          controller.isOpen
-                              ? controller.close()
-                              : controller.open();
-                        },
-                      ),
-                    );
-                  },
-                ),
+                  );
+                },
               ),
             ),
           ],
