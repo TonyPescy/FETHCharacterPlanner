@@ -89,8 +89,30 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
 
+              
+
                 child: MenuAnchor(
                   menuChildren: [
+                    
+                    MenuItemButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(theme.primary),
+                        foregroundColor: WidgetStatePropertyAll(theme.text),
+                      ),
+
+                      onPressed: () {
+                        debugPrint("Settings");
+                      },
+
+                      child: Text(
+                        "Settings",
+                        style: TextStyle(
+                          fontSize: AppTextSizes.body(context),
+                          color: theme.text,
+                        ),
+                      ),
+                    ),
+
                     SubmenuButton(
                       // This styles the "Themes" row itself
                       style: ButtonStyle(
@@ -121,25 +143,6 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
 
                       child: Text(
                         "Themes",
-                        style: TextStyle(
-                          fontSize: AppTextSizes.body(context),
-                          color: theme.text,
-                        ),
-                      ),
-                    ),
-
-                    MenuItemButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(theme.primary),
-                        foregroundColor: WidgetStatePropertyAll(theme.text),
-                      ),
-
-                      onPressed: () {
-                        debugPrint("Settings");
-                      },
-
-                      child: Text(
-                        "Settings",
                         style: TextStyle(
                           fontSize: AppTextSizes.body(context),
                           color: theme.text,
