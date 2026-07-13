@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:feth_character_planner/main.dart';
 import 'package:provider/provider.dart';
 import 'package:feth_character_planner/themes.dart';
+import 'dart:math' as math;
 
 // Homepage Start
 class MyHomePage extends StatelessWidget {
@@ -14,6 +15,13 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
+    // Screen size for button sizing
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    // 33% of the smaller screen dimension, max 200px.
+    double buttonSize = math.min( math.min(screenWidth, screenHeight) * 0.33, 200);
+
+
     return Scaffold(
       // Topbar
       appBar: MyTopBar(
@@ -23,27 +31,97 @@ class MyHomePage extends StatelessWidget {
 
       // Body
       body: Center(
-       child: Column( 
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('A random idea is here:'),
-            Text(appState.current.asLowerCase),
-
-            // ↓ Add this.
-            ElevatedButton(
-              onPressed: () {
-                print('button pressed!');
-                context.read<ThemeManager>().setTheme("royalPurple");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const MyPlansPage(),
+            // Row 1
+            Row( 
+              mainAxisAlignment: MainAxisAlignment.center,
+              
+              children: [
+                // Create Character plan
+                SizedBox(
+                  width: buttonSize,
+                  height: buttonSize,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Your action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home, size: 48),   // NEEDS BETTER ICONS FOR THIS
+                        SizedBox(height: 12),
+                        Text(
+                          'Create Character Plan',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
-              child: Text('Next'),
+                ),
+
+                // Create House Plan
+                SizedBox(
+                  width: buttonSize,
+                  height: buttonSize,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Your action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home, size: 48),   // NEEDS BETTER ICONS FOR THIS
+                        SizedBox(height: 12),
+                        Text(
+                          'Create House Plan',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ]
             ),
+                  // Row 2
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Create House Plan
+                      Text('This will be button 2:'),
+                      Text(appState.current.asLowerCase),
+
+                      // ↓ Add this.
+                      ElevatedButton(
+                        onPressed: () {
+                          print('');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (context) => const MyPlansPage(),
+                            ),
+                          );
+                        },
+                        child: Text('Next2'),
+                      ),
+                    ],
+                  ),
           ],
         ),
+      
       ),
     );
   }
@@ -93,3 +171,60 @@ class MyPlansPage extends StatelessWidget {
   }
 }
 // Plans Page End
+
+// CreateSingleCharPage Start
+  class CreateSingleCharPage extends StatelessWidget {
+    const CreateSingleCharPage({super.key});
+    // routeName for current page checking
+    static const routeName = "/create_single_char";
+    
+      @override
+      Widget build(BuildContext context) {
+      //\ implement build
+    throw UnimplementedError();
+      }
+  }
+// CreateSingleCharPage End
+
+
+// CreateHousePlan Start
+  class CreateHousePlan extends StatelessWidget {
+    const CreateHousePlan({super.key});
+    // routeName for current page checking
+    static const routeName = "/create_house_plan";
+    
+      @override
+      Widget build(BuildContext context) {
+      //\ implement build
+    throw UnimplementedError();
+      }
+  }
+// CreateHousePlan End
+
+// ViewHousePlans Start
+  class ViewHousePlans extends StatelessWidget {
+    const ViewHousePlans({super.key});
+    // routeName for current page checking
+    static const routeName = "/view_house_plan";
+
+    @override
+      Widget build(BuildContext context) {
+      //\ implement build
+    throw UnimplementedError();
+      }
+  }
+// ViewHousePlans End
+
+// ViewCharPlans Start
+  class ViewCharPlans extends StatelessWidget {
+    const ViewCharPlans({super.key});
+    // routeName for current page checking
+    static const routeName = "/view_char_plan";
+
+    @override
+      Widget build(BuildContext context) {
+      //: implement build
+    throw UnimplementedError();
+      }
+  }
+// ViewCharPlans End
