@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:feth_character_planner/themes.dart';
+import 'package:feth_character_planner/pages.dart';
 import 'package:provider/provider.dart';
-
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title; // Current page name
@@ -51,7 +51,12 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {
                     // Navigate to the homepage when pressed
                     // Depending on the page you are on, it will ask for confirmation (used for editing pages etc)
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (context) => const MyHomePage(),
+                      ),
+                    );
                   },
                 ),
               ),
