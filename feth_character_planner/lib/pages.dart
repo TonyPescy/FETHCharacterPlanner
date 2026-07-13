@@ -13,115 +13,69 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    // Keep this if you're using it elsewhere
+    context.watch<MyAppState>();
+    // Get Theme
+    final theme = context.watch<ThemeManager>().currentTheme;
 
-    // Screen size for button sizing
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    // 33% of the smaller screen dimension, max 200px.
-    double buttonSize = math.min( math.min(screenWidth, screenHeight) * 0.33, 200);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
+    // Button is 28% of the smaller screen dimension, max 200px.
+    final buttonSize = math.min(math.min(screenWidth, screenHeight) * 0.28, 400.0);
+
+    // Spacing scales with screen size.
+    final spacing = math.min(screenWidth * 0.04, 40.0);
 
     return Scaffold(
-      // Topbar
+      // Themes
+      backgroundColor: theme.secondary,
+
       appBar: MyTopBar(
         title: "Fire Emblem Three House Character Planner",
-        height: AppSizes.topBarHeight(context), // in themes.dart - 8% of screen size
+        height: AppSizes.topBarHeight(context),
       ),
 
-      // Body
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Row 1
-            Row( 
-              mainAxisAlignment: MainAxisAlignment.center,
-              
-              children: [
-                // Create Character plan
-                SizedBox(
-                  width: buttonSize,
-                  height: buttonSize,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Your action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.home, size: 48),   // NEEDS BETTER ICONS FOR THIS
-                        SizedBox(height: 12),
-                        Text(
-                          'Create Character Plan',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+        child: Padding(
+          padding: EdgeInsets.all(spacing),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: spacing,
+            runSpacing: spacing,
+            children: [
+              homeButton(
+                context: context,
+                size: buttonSize,
+                icon: Icons.person,
+                text: "Create Character Plan",
+                onPressed: () {
+                  //
+                },
+              ),
 
-                // Create House Plan
-                SizedBox(
-                  width: buttonSize,
-                  height: buttonSize,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Your action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.home, size: 48),   // NEEDS BETTER ICONS FOR THIS
-                        SizedBox(height: 12),
-                        Text(
-                          'Create House Plan',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ]
-            ),
-                  // Row 2
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Create House Plan
-                      Text('This will be button 2:'),
-                      Text(appState.current.asLowerCase),
+              homeButton(
+                context: context,
+                size: buttonSize,
+                icon: Icons.home,
+                text: "Create House Plan",
+                onPressed: () {
+                  //
+                },
+              ),
 
-                      // ↓ Add this.
-                      ElevatedButton(
-                        onPressed: () {
-                          print('');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => const MyPlansPage(),
-                            ),
-                          );
-                        },
-                        child: Text('Next2'),
-                      ),
-                    ],
-                  ),
-          ],
+              homeButton(
+                context: context,
+                size: buttonSize,
+                icon: Icons.groups,
+                text: "Manage Plans",
+                onPressed: () {
+                  //
+                },
+              ),
+            ],
+          ),
         ),
-      
       ),
     );
   }

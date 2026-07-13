@@ -121,7 +121,7 @@ class ThemeManager extends ChangeNotifier {
 // Controls sizes for app
 class AppSizes {
   // Topbar height as percentage of screen height
-  static double topBarHeight(BuildContext context) => (MediaQuery.of(context).size.height * 0.08).clamp(56.0, 120.0);  // 8% of screen height - clamped to avoid massive topbars on larger screens
+  static double topBarHeight(BuildContext context) => (MediaQuery.of(context).size.height * 0.10).clamp(56.0, 150.0);  // 8% of screen height - clamped to avoid massive topbars on larger screens
 
   // Icon size inside topbar
   static double topBarIcon(BuildContext context) => topBarHeight(context) * 1;  // 100% of topbar height to avoid it looking like a blob

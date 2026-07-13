@@ -267,3 +267,45 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(height);
 }
 // End of top bar
+
+// Home Screen Buttons Start
+Widget homeButton({
+  required BuildContext context,
+  required String text,
+  required IconData icon,
+  required VoidCallback onPressed,
+  required double size,
+  
+
+  }) {
+  final theme = context.watch<ThemeManager>().currentTheme;
+  return SizedBox(
+    width: size,
+    height: size,
+    child: ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: theme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: size * 0.25, color: theme.icon),
+          SizedBox(height: size * 0.06),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: theme.icon,
+              fontSize: AppTextSizes.caption(context),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+// Home Screen Button Ends
