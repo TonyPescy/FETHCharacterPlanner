@@ -384,10 +384,10 @@ class PlanDisplayCard extends StatefulWidget {
                     // Pull information from json files and fill it in
                     const SizedBox(height: 8),
 
-                    const Text("• Edelgard"),
-                    const Text("• Hubert"),
-                    const Text("• Ferdinand"),
-                    const Text("• Bernadetta"),
+                    const Text("Edelgard"),
+                    const Text("Hubert"),
+                    const Text("Ferdinand"),
+                    const Text("Bernadetta"),
                   ],
                 ),
               ),
