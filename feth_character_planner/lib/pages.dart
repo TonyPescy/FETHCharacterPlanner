@@ -133,7 +133,7 @@ class MyPlansPage extends StatelessWidget {
       backgroundColor: theme.secondary,
       // Topbar
       appBar: MyTopBar(
-        title: "My Fire Emblem Three House Character Plans",
+        title: "My Fire Emblem Three House Plans",
         height: AppSizes.topBarHeight(context), // in themes.dart - 8% of screen size
       ),
 
