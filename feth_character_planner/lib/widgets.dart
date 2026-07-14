@@ -328,97 +328,155 @@ class PlanDisplayCard extends StatefulWidget {
     @override
     Widget build(BuildContext context) {
       final theme = context.watch<ThemeManager>().currentTheme;
+      final members = [ // Will need to be taken from the JSON file
+        "Edelgard",
+        "Hubert",
+        "Ferdinand",
+        "Bernadetta",
+        "Dorothea",
+        "Caspar",
+        "Petra",
+        "Linhardt",
+        "bas",
+        "dih",
+        "patches",
+        "help",
+        "me",
+        "shamir",
+        "name15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21"
+      ];
 
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => hovered = true),
         onExit: (_) => setState(() => hovered = false),
-        child: AnimatedContainer(
-          // Hover effects
-          duration: const Duration(milliseconds: 150),
-          transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
-          decoration: BoxDecoration(
-            color: theme.primary,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: hovered ? theme.icon : Colors.transparent,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: hovered ? 0.30 : 0.12),
-                blurRadius: hovered ? 24 : 8,
-                spreadRadius: hovered ? 2 : 0,
-                offset: Offset(0, hovered ? 10 : 4),
-              ),
-            ],
-          ),
-            child: Row(
-              children: [
-              // Left Character PFP/House PFP
-              SizedBox(
-                width: 100, // NEEDS TO BE REACTIVE
-                child: IconButton(
-                  iconSize: 80, // NEEDS TO BE REACTIVE
-                  icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
-                  onPressed: () {},
+
+        child: LayoutBuilder( 
+          builder: (context, constraints) {
+            // Columns for card names
+            const columns = 4;
+            // Columns for card stats
+
+            // Card width based on screen dimensions
+            final cardWidth = constraints.maxWidth;
+            // Sizing based on card width
+            final imageWidth = cardWidth * 0.10;
+            //final buttonWidth = cardWidth * 0.10;
+            final iconSize = cardWidth * 0.08;
+            final spacing = cardWidth * 0.02;
+            final runSpacing = cardWidth * 0.00385;
+            final nameWidth = ((cardWidth - (columns - 1) * spacing) / columns);
+
+
+
+            return AnimatedContainer(
+              // Hover effects
+              duration: const Duration(milliseconds: 150),
+              transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
+              decoration: BoxDecoration(
+                color: theme.primary,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: hovered ? theme.icon : Colors.transparent,
+                  width: 3,
                 ),
-              ),
-
-              //const SizedBox(width: 16),
-
-              // Middle - Character Stats or House Units
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Black Eagles - TEMP",          // Use values pulled from a list provided to the planDisplayCard
-                      style: TextStyle(
-                        fontSize: 24,                 // USE APPSIZES
-                        fontWeight: FontWeight.bold,  // USE APPSIZES
-                        color: theme.surface,
-                        //backgroundColor: theme.text,
-                      ),
-                    ),
-                    // Pull information from json files and fill it in
-                    const SizedBox(height: 8),
-
-                    const Text("Edelgard"),
-                    const Text("Hubert"),
-                    const Text("Ferdinand"),
-                    const Text("Bernadetta"),
-                  ],
-                ),
-              ),
-
-              //const SizedBox(width: 16),
-
-              // Right - Edit, Export, and delete buttons
-              Column(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    color: theme.icon,
-                    tooltip: "Edit",
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.import_export),
-                    color: theme.icon,
-                    tooltip: "Export",
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: theme.icon,
-                    tooltip: "Delete",
-                    onPressed: () {},
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: hovered ? 0.30 : 0.12),
+                    blurRadius: hovered ? 24 : 8,
+                    spreadRadius: hovered ? 2 : 0,
+                    offset: Offset(0, hovered ? 10 : 4),
                   ),
                 ],
+              ),
+                child: Row(
+                  children: [
+                  // Left Character PFP/House PFP
+                  Expanded(
+                    flex: 1, // NEEDS TO BE REACTIVE
+                    child: IconButton(
+                      iconSize: iconSize, // NEEDS TO BE REACTIVE
+                      icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
+                      onPressed: () {},
+                    ),
+                  ),
+
+                  //const SizedBox(width: 16),
+
+                  // Middle - Character Stats or House Units
+                  Expanded(
+                    flex: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // If plan is a house plan
+                      children: [
+                        Text(
+                          "Black Eagles",
+                          style: TextStyle(
+                            fontSize: AppTextSizes.heading(context),
+                            fontWeight: FontWeight.bold,
+                            color: theme.surface,
+                          ),
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        Wrap(
+                          spacing: spacing,
+                          runSpacing: runSpacing,
+                          children: members.map((member) {
+                            return SizedBox(
+                              width: nameWidth,
+                              child: Text(
+                                member,
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                      // If plan is a individual character plan
+                    ),
+                  ),
+
+                  //const SizedBox(width: 16),
+
+                  // Right - Edit, Export, and delete buttons
+                  Expanded( 
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          color: theme.icon,
+                          tooltip: "Edit",
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.import_export),
+                          color: theme.icon,
+                          tooltip: "Export",
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          color: theme.icon,
+                          tooltip: "Delete",
+                          onPressed: () {},
+                        ),
+                      ],
+                    )
+                  )
+                ]
               )
-            ]
-          )
+            );
+          }
         )
       );
     }
