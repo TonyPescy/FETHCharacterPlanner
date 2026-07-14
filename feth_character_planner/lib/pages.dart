@@ -50,7 +50,14 @@ class MyHomePage extends StatelessWidget {
                 icon: Icons.person,
                 text: "Create Character Plan",
                 onPressed: () {
-                  //
+                  debugPrint('Create Character Plan Home Button Pressed');
+                  // Navigate to 'Create Character Plan' page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const CreateSingleCharPage(),
+                    ),
+                  );
                 },
               ),
 
@@ -60,7 +67,14 @@ class MyHomePage extends StatelessWidget {
                 icon: Icons.home,
                 text: "Create House Plan",
                 onPressed: () {
-                  //
+                  debugPrint('Create House Plan Home Button Pressed');
+                  // Navigate to 'Create House Plan' page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const CreateHousePlanPage(),
+                    ),
+                  );
                 },
               ),
 
@@ -70,7 +84,14 @@ class MyHomePage extends StatelessWidget {
                 icon: Icons.groups,
                 text: "Manage Plans",
                 onPressed: () {
-                  //
+                  debugPrint('Manage Plans Home Button Pressed');
+                  // Navigate to 'Manage Plans' page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const MyPlansPage(),
+                    ),
+                  );
                 },
               ),
             ],
@@ -88,11 +109,28 @@ class MyPlansPage extends StatelessWidget {
   // routeName for current page checking
   static const routeName = "/plans";
 
+
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    //var appState = context.watch<MyAppState>();
+
+    // Variables for use in styling and theming
+    final theme = context.watch<ThemeManager>().currentTheme;
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    //final screenHeight = MediaQuery.of(context).size.height;
+
+    // Button is 28% of the smaller screen dimension, max 200px.
+    //final buttonSize = math.min(math.min(screenWidth, screenHeight) * 0.28, 400.0);
+
+    // Spacing scales with screen size.
+    final spacing = math.min(screenWidth * 0.04, 40.0);
 
     return Scaffold(
+      // Styling
+      // Themes
+      backgroundColor: theme.secondary,
       // Topbar
       appBar: MyTopBar(
         title: "My Fire Emblem Three House Character Plans",
@@ -100,26 +138,38 @@ class MyPlansPage extends StatelessWidget {
       ),
 
       // Body
-      body: Column(
-        children: [
-          Text('PLAN PAGE!:'),
-          Text(appState.current.asLowerCase),
-
-          // ↓ Add this.
-          ElevatedButton(
-            onPressed: () {
-              print('button pressed!');
-              context.read<ThemeManager>().setTheme("Forest");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const MyHomePage(),
-                  ),
-                );
-              },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        child : Padding(
+          padding: EdgeInsets.all(spacing),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: spacing,
+            runSpacing: spacing,
+            children: [
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+              planDisplayCard(context: context),
+            ]
+          )
+        )
       ),
     );
   }
@@ -141,9 +191,9 @@ class MyPlansPage extends StatelessWidget {
 // CreateSingleCharPage End
 
 
-// CreateHousePlan Start
-  class CreateHousePlan extends StatelessWidget {
-    const CreateHousePlan({super.key});
+// CreateHousePlanPage Start
+  class CreateHousePlanPage extends StatelessWidget {
+    const CreateHousePlanPage({super.key});
     // routeName for current page checking
     static const routeName = "/create_house_plan";
     
@@ -153,11 +203,11 @@ class MyPlansPage extends StatelessWidget {
     throw UnimplementedError();
       }
   }
-// CreateHousePlan End
+// CreateHousePlanPage End
 
-// ViewHousePlans Start
-  class ViewHousePlans extends StatelessWidget {
-    const ViewHousePlans({super.key});
+// ViewHousePlansPage Start
+  class ViewHousePlansPage extends StatelessWidget {
+    const ViewHousePlansPage({super.key});
     // routeName for current page checking
     static const routeName = "/view_house_plan";
 
@@ -167,9 +217,9 @@ class MyPlansPage extends StatelessWidget {
     throw UnimplementedError();
       }
   }
-// ViewHousePlans End
+// ViewHousePlansPage End
 
-// ViewCharPlans Start
+// ViewCharPlansPage Start
   class ViewCharPlans extends StatelessWidget {
     const ViewCharPlans({super.key});
     // routeName for current page checking
@@ -181,4 +231,4 @@ class MyPlansPage extends StatelessWidget {
     throw UnimplementedError();
       }
   }
-// ViewCharPlans End
+// ViewCharPlansPage End

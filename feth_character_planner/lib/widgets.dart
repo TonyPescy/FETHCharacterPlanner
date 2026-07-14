@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:feth_character_planner/themes.dart';
 import 'package:feth_character_planner/pages.dart';
 import 'package:provider/provider.dart';
+//import 'dart:convert';
+
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title; // Current page name
@@ -51,6 +53,7 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {
                     // Navigate to the homepage when pressed
                     // Depending on the page you are on, it will ask for confirmation (used for editing pages etc)
+                    // NEEDS IMPLEMENTATION
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
@@ -268,10 +271,7 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
 }
 // End of top bar
 
-// Home Screen Buttons Start
-//class MyHomeButton extends StatefulWidget {
-  
-//}
+// Home Screen Buttons Starts
 Widget homeButton({
   required BuildContext context,
   required String text,
@@ -313,3 +313,82 @@ Widget homeButton({
   );
 }
 // Home Screen Button Ends
+
+// Plan Display card start
+Widget planDisplayCard({
+  required BuildContext context,
+  //required cardType enum,
+  //required List data  // Could change from list to map etc
+
+  }) {
+    // Styling
+    final theme = context.watch<ThemeManager>().currentTheme;
+
+    return Container(
+      color: theme.accent,
+
+      child: Row(
+        children: [
+          // Left Character PFP/House PFP
+          SizedBox(
+            width: 100, // NEEDS TO BE REACTIVE
+            child: IconButton(
+              iconSize: 80, // NEEDS TO BE REACTIVE
+              icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
+              onPressed: () {},
+            ),
+          ),
+
+          //const SizedBox(width: 16),
+
+          // Middle - Character Stats or House Units
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Black Eagles - TEMP",          // Use values pulled from a list provided to the planDisplayCard
+                  style: TextStyle(
+                    fontSize: 24,                 // USE APPSIZES
+                    fontWeight: FontWeight.bold,  // USE APPSIZES
+                    //backgroundColor: theme.text,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                const Text("• Edelgard"),
+                const Text("• Hubert"),
+                const Text("• Ferdinand"),
+                const Text("• Bernadetta"),
+              ],
+            ),
+          ),
+
+          //const SizedBox(width: 16),
+
+          // Right - Edit, Export, and delete buttons
+          Column(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                tooltip: "Edit",
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.import_export),
+                tooltip: "Export",
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                tooltip: "Delete",
+                onPressed: () {},
+              ),
+            ],
+          )
+        ]
+      )
+    );
+  }
+// Plan Display Card End
