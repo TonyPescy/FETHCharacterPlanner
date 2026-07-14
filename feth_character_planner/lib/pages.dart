@@ -141,33 +141,18 @@ class MyPlansPage extends StatelessWidget {
       body: Center(
         child : Padding(
           padding: EdgeInsets.all(spacing),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: spacing,
-            runSpacing: spacing,
-            children: [
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-              planDisplayCard(context: context),
-            ]
+          child: ListView.separated(
+            itemBuilder: (context, index) {
+              return planDisplayCard(context: context);
+            },
+            shrinkWrap: true,
+            // Divider between list items
+            separatorBuilder: (context, index) => Divider(
+              color: theme.background,
+              thickness: 1.0,
+            ),
+            // Number of items in the list
+            itemCount: 10, // REPLACE WITH NUMBER OF PLANS FROM TXT/JSON
           )
         )
       ),

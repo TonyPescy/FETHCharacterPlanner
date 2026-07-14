@@ -325,7 +325,7 @@ Widget planDisplayCard({
     final theme = context.watch<ThemeManager>().currentTheme;
 
     return Container(
-      color: theme.accent,
+      color: theme.primary,
 
       child: Row(
         children: [
