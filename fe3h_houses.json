@@ -1,0 +1,49 @@
+{
+  "Black Eagles": [
+    "Edelgard",
+    "Hubert",
+    "Ferdinand",
+    "Linhardt",
+    "Caspar",
+    "Bernadetta",
+    "Dorothea",
+    "Petra"
+  ],
+  "Blue Lions": [
+    "Dimitri",
+    "Dedue",
+    "Felix",
+    "Ashe",
+    "Sylvain",
+    "Mercedes",
+    "Annette",
+    "Ingrid"
+  ],
+  "Golden Deer": [
+    "Claude",
+    "Lorenz",
+    "Raphael",
+    "Ignatz",
+    "Lysithea",
+    "Marianne",
+    "Hilda",
+    "Leonie"
+  ],
+  "Church of Seiros": [
+    "Seteth",
+    "Flayn",
+    "Hanneman",
+    "Manuela",
+    "Gilbert",
+    "Alois",
+    "Catherine",
+    "Shamir",
+    "Cyril"
+  ],
+  "Ashen Wolves": [
+    "Yuri",
+    "Balthus",
+    "Constance",
+    "Hapi"
+  ]
+}
