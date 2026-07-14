@@ -143,7 +143,7 @@ class MyPlansPage extends StatelessWidget {
           padding: EdgeInsets.all(spacing),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              return planDisplayCard(context: context);
+              return PlanDisplayCard();
             },
             shrinkWrap: true,
             // Divider between list items

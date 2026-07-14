@@ -315,80 +315,112 @@ Widget homeButton({
 // Home Screen Button Ends
 
 // Plan Display card start
-Widget planDisplayCard({
-  required BuildContext context,
-  //required cardType enum,
-  //required List data  // Could change from list to map etc
+class PlanDisplayCard extends StatefulWidget {
+  const PlanDisplayCard({super.key});
 
-  }) {
-    // Styling
-    final theme = context.watch<ThemeManager>().currentTheme;
+  @override
+  State<PlanDisplayCard> createState() => _PlanDisplayCardState();
+}
 
-    return Container(
-      color: theme.primary,
+  class _PlanDisplayCardState extends State<PlanDisplayCard> {
+    bool hovered = false;
 
-      child: Row(
-        children: [
-          // Left Character PFP/House PFP
-          SizedBox(
-            width: 100, // NEEDS TO BE REACTIVE
-            child: IconButton(
-              iconSize: 80, // NEEDS TO BE REACTIVE
-              icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
-              onPressed: () {},
+    @override
+    Widget build(BuildContext context) {
+      final theme = context.watch<ThemeManager>().currentTheme;
+
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => hovered = true),
+        onExit: (_) => setState(() => hovered = false),
+        child: AnimatedContainer(
+          // Hover effects
+          duration: const Duration(milliseconds: 150),
+          transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
+          decoration: BoxDecoration(
+            color: theme.primary,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: hovered ? theme.icon : Colors.transparent,
+              width: 3,
             ),
-          ),
-
-          //const SizedBox(width: 16),
-
-          // Middle - Character Stats or House Units
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Black Eagles - TEMP",          // Use values pulled from a list provided to the planDisplayCard
-                  style: TextStyle(
-                    fontSize: 24,                 // USE APPSIZES
-                    fontWeight: FontWeight.bold,  // USE APPSIZES
-                    //backgroundColor: theme.text,
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-
-                const Text("• Edelgard"),
-                const Text("• Hubert"),
-                const Text("• Ferdinand"),
-                const Text("• Bernadetta"),
-              ],
-            ),
-          ),
-
-          //const SizedBox(width: 16),
-
-          // Right - Edit, Export, and delete buttons
-          Column(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit),
-                tooltip: "Edit",
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.import_export),
-                tooltip: "Export",
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete),
-                tooltip: "Delete",
-                onPressed: () {},
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: hovered ? 0.30 : 0.12),
+                blurRadius: hovered ? 24 : 8,
+                spreadRadius: hovered ? 2 : 0,
+                offset: Offset(0, hovered ? 10 : 4),
               ),
             ],
+          ),
+            child: Row(
+              children: [
+              // Left Character PFP/House PFP
+              SizedBox(
+                width: 100, // NEEDS TO BE REACTIVE
+                child: IconButton(
+                  iconSize: 80, // NEEDS TO BE REACTIVE
+                  icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
+                  onPressed: () {},
+                ),
+              ),
+
+              //const SizedBox(width: 16),
+
+              // Middle - Character Stats or House Units
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Black Eagles - TEMP",          // Use values pulled from a list provided to the planDisplayCard
+                      style: TextStyle(
+                        fontSize: 24,                 // USE APPSIZES
+                        fontWeight: FontWeight.bold,  // USE APPSIZES
+                        color: theme.surface,
+                        //backgroundColor: theme.text,
+                      ),
+                    ),
+                    // Pull information from json files and fill it in
+                    const SizedBox(height: 8),
+
+                    const Text("• Edelgard"),
+                    const Text("• Hubert"),
+                    const Text("• Ferdinand"),
+                    const Text("• Bernadetta"),
+                  ],
+                ),
+              ),
+
+              //const SizedBox(width: 16),
+
+              // Right - Edit, Export, and delete buttons
+              Column(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    color: theme.icon,
+                    tooltip: "Edit",
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.import_export),
+                    color: theme.icon,
+                    tooltip: "Export",
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: theme.icon,
+                    tooltip: "Delete",
+                    onPressed: () {},
+                  ),
+                ],
+              )
+            ]
           )
-        ]
-      )
-    );
+        )
+      );
+    }
   }
 // Plan Display Card End
