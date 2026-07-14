@@ -29,13 +29,13 @@ class AppThemeColors {
 class AppThemes {
 
   static const royalPurple = AppThemeColors(
-    background: Color(0xFF1A1028), // Deep academy/night purple
-    surface: Color(0xFF2A1745),    // Rich violet surface
-    primary: Color(0xFF6B4FA3),    // Royal purple
-    secondary: Color.fromARGB(255, 68, 49, 110),  // Soft lavender highlight
-    accent: Color(0xFFE5B84B),     // Crest-like gold
-    text: Color(0xFFF8F4FF),       // Warm white
-    icon: Color.fromARGB(255, 207, 189, 236),       // Muted lavender icons
+    background: Color(0xFF1A1028), // darkest purple
+    surface: Color(0xFF2A1745),    // Dark purple
+    primary: Color(0xFF6B4FA3),    // Mid purple
+    secondary: Color.fromARGB(255, 68, 49, 110),  // Deep purple - Darker than primary
+    accent: Color(0xFFE5B84B),     // Golden color
+    text: Color(0xFFF8F4FF),       // Lightest color for text on darker background
+    icon: Color.fromARGB(255, 207, 189, 236),       // Light Color to show icons well
     );
 
   static const ocean = AppThemeColors(

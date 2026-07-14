@@ -269,6 +269,9 @@ class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
 // End of top bar
 
 // Home Screen Buttons Start
+//class MyHomeButton extends StatefulWidget {
+  
+//}
 Widget homeButton({
   required BuildContext context,
   required String text,
@@ -285,6 +288,7 @@ Widget homeButton({
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        overlayColor: theme.icon,
         backgroundColor: theme.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
