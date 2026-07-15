@@ -314,6 +314,8 @@ Widget homeButton({
 }
 // Home Screen Button Ends
 
+
+
 // Plan Display card start
 class PlanDisplayCard extends StatefulWidget {
   const PlanDisplayCard({super.key});
@@ -324,6 +326,13 @@ class PlanDisplayCard extends StatefulWidget {
 
   class _PlanDisplayCardState extends State<PlanDisplayCard> {
     bool hovered = false;
+    final ScrollController _scrollController = ScrollController();
+
+    @override
+    void dispose() {
+      _scrollController.dispose();
+      super.dispose();
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -364,18 +373,21 @@ class PlanDisplayCard extends StatefulWidget {
             // Columns for card stats
 
             // Card width based on screen dimensions
-            final cardWidth = constraints.maxWidth;
+            final cardWidth = MediaQuery.of(context).size.width * 0.80;
+            final cardHeight = MediaQuery.of(context).size.height * 0.20; // 15%
             // Sizing based on card width
-            final imageWidth = cardWidth * 0.10;
+            //final imageWidth = cardWidth * 0.10;
             //final buttonWidth = cardWidth * 0.10;
             final iconSize = cardWidth * 0.08;
             final spacing = cardWidth * 0.02;
-            final runSpacing = cardWidth * 0.00385;
-            final nameWidth = ((cardWidth - (columns - 1) * spacing) / columns);
+            //final runSpacing = cardWidth * 0.00385;
+            //final nameWidth = ((cardWidth - (columns - 1) * spacing) / columns);
 
 
 
             return AnimatedContainer(
+              // Style
+              height: cardHeight,
               // Hover effects
               duration: const Duration(milliseconds: 150),
               transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
@@ -395,8 +407,8 @@ class PlanDisplayCard extends StatefulWidget {
                   ),
                 ],
               ),
-                child: Row(
-                  children: [
+              child: Row(
+                children: [
                   // Left Character PFP/House PFP
                   Expanded(
                     flex: 1, // NEEDS TO BE REACTIVE
@@ -422,23 +434,33 @@ class PlanDisplayCard extends StatefulWidget {
                             fontSize: AppTextSizes.heading(context),
                             fontWeight: FontWeight.bold,
                             color: theme.surface,
+                            height: 1.0, // Shorten to make more room for Scrollbar content
                           ),
                         ),
 
-                        const SizedBox(height: 12),
+                        //const SizedBox(height: 12),
 
-                        Wrap(
-                          spacing: spacing,
-                          runSpacing: runSpacing,
-                          children: members.map((member) {
-                            return SizedBox(
-                              width: nameWidth,
-                              child: Text(
-                                member,
-                                textAlign: TextAlign.center,
+                        Expanded(
+                          child: Scrollbar(
+                            controller: _scrollController,
+                            //thumbVisibility: true,
+                            child: GridView.builder(
+                              controller: _scrollController,
+                              itemCount: members.length,
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                childAspectRatio: 8,
                               ),
-                            );
-                          }).toList(),
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: Text(
+                                    members[index],
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ],
                       // If plan is a individual character plan
