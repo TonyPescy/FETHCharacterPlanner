@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:feth_character_planner/themes.dart';
 import 'package:feth_character_planner/pages.dart';
 import 'package:provider/provider.dart';
+import 'package:feth_character_planner/models/plan.dart';
 //import 'dart:convert';
 
 // Topbar class
@@ -318,7 +319,11 @@ Widget homeButton({
 
 // Plan Display card start
 class PlanDisplayCard extends StatefulWidget {
-  const PlanDisplayCard({super.key});
+  final Plan plan;
+  const PlanDisplayCard({
+    super.key, 
+    required this.plan
+  });
 
   @override
   State<PlanDisplayCard> createState() => _PlanDisplayCardState();
@@ -337,7 +342,7 @@ class PlanDisplayCard extends StatefulWidget {
     @override
     Widget build(BuildContext context) {
       final theme = context.watch<ThemeManager>().currentTheme;
-      final members = [ // Will need to be taken from the JSON file
+      /*final members = [ // Will need to be taken from the JSON file
         "Edelgard",
         "Hubert",
         "Ferdinand",
@@ -360,6 +365,8 @@ class PlanDisplayCard extends StatefulWidget {
         "20",
         "21"
       ];
+      */
+      final members = widget.plan.characters;
 
       return MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -426,7 +433,7 @@ class PlanDisplayCard extends StatefulWidget {
                       // If plan is a house plan
                       children: [
                         Text(
-                          "Black Eagles",
+                          widget.plan.name,
                           style: TextStyle(
                             fontSize: AppTextSizes.heading(context),
                             fontWeight: FontWeight.bold,
@@ -451,7 +458,7 @@ class PlanDisplayCard extends StatefulWidget {
                               itemBuilder: (context, index) {
                                 return Center(
                                   child: Text(
-                                    members[index],
+                                    members[index].id,
                                     textAlign: TextAlign.center,
                                   ),
                                 );

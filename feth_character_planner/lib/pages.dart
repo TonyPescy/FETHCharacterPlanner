@@ -4,6 +4,9 @@ import 'package:feth_character_planner/main.dart';
 import 'package:provider/provider.dart';
 import 'package:feth_character_planner/themes.dart';
 import 'dart:math' as math;
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:feth_character_planner/models/plan.dart';
 
 // Homepage Start
 class MyHomePage extends StatelessWidget {
@@ -104,61 +107,76 @@ class MyHomePage extends StatelessWidget {
 // Homepage End
 
 // PlansPage Start
-class MyPlansPage extends StatelessWidget {
+class MyPlansPage extends StatefulWidget {
   const MyPlansPage({super.key});
+
   // routeName for current page checking
   static const routeName = "/plans";
 
-  // Will need to read data from JSON file
-  // This file will be found in /local and is user specific - names users_plan.json
-  // Could use it with item builder or may new whole logic behind it
+  @override
+  State<MyPlansPage> createState() => _MyPlansPageState();
+}
 
+class _MyPlansPageState extends State<MyPlansPage> {
+  List<Plan> housePlans = [];
+  List<PlanCharacter> characterPlans = [];
 
+  @override
+  void initState() {
+    super.initState();
+    loadPlans();
+  }
+
+  Future<void> loadPlans() async {
+    final jsonString = await rootBundle.loadString(
+      'local/user_plans.json',
+    );
+
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    housePlans = jsonData
+        .where((item) => item["type"] == "house")
+        .map((item) => Plan.fromJson(item))
+        .toList();
+
+    characterPlans = jsonData
+        .where((item) => item["type"] == "character_plan")
+        .map((item) => PlanCharacter.fromJson(item))
+        .toList();
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    //var appState = context.watch<MyAppState>();
-
     // Variables for use in styling and theming
     final theme = context.watch<ThemeManager>().currentTheme;
 
     final screenWidth = MediaQuery.of(context).size.width;
-    //final screenHeight = MediaQuery.of(context).size.height;
-
-    // Button is 28% of the smaller screen dimension, max 200px.
-    //final buttonSize = math.min(math.min(screenWidth, screenHeight) * 0.28, 400.0);
-
-    // Spacing scales with screen size.
-    final spacing = math.min(screenWidth * 0.04, 40.0); // 4% or 40 px
+    final spacing = math.min(screenWidth * 0.04, 40.0);
 
     return Scaffold(
-      // Styling
-      // Themes
       backgroundColor: theme.secondary,
-      // Topbar
       appBar: MyTopBar(
         title: "My Fire Emblem Three House Plans",
-        height: AppSizes.topBarHeight(context), // in themes.dart - 8% of screen size
+        height: AppSizes.topBarHeight(context),
       ),
-
-      // Body
       body: Center(
-        child : Padding(
+        child: Padding(
           padding: EdgeInsets.all(spacing),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              return PlanDisplayCard();
+              return PlanDisplayCard(
+                plan: housePlans[index],
+              );
             },
-            shrinkWrap: true,
-            // Divider between list items
             separatorBuilder: (context, index) => Divider(
               color: theme.background,
               thickness: 1.0,
             ),
-            // Number of items in the list
-            itemCount: 10, // REPLACE WITH NUMBER OF PLANS FROM TXT/JSON
-          )
-        )
+            itemCount: housePlans.length, // or however you want to display them
+          ),
+        ),
       ),
     );
   }
