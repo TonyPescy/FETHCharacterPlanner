@@ -374,15 +374,12 @@ class PlanDisplayCard extends StatefulWidget {
 
             // Card width based on screen dimensions
             final cardWidth = MediaQuery.of(context).size.width * 0.80;
-            final cardHeight = MediaQuery.of(context).size.height * 0.20; // 15%
+            final cardHeight = MediaQuery.of(context).size.height * 0.20; // 20%
             // Sizing based on card width
             //final imageWidth = cardWidth * 0.10;
             //final buttonWidth = cardWidth * 0.10;
-            final iconSize = cardWidth * 0.08;
-            //final spacing = cardWidth * 0.02;
-            //final runSpacing = cardWidth * 0.00385;
-            //final nameWidth = ((cardWidth - (columns - 1) * spacing) / columns);
-
+            final imageSize = cardWidth * 0.08;
+            final iconSize = imageSize * 0.33; // Same as image but seperated into 3 parts
 
 
             return AnimatedContainer(
@@ -413,7 +410,7 @@ class PlanDisplayCard extends StatefulWidget {
                   Expanded(
                     flex: 1, // NEEDS TO BE REACTIVE
                     child: IconButton(
-                      iconSize: iconSize, // NEEDS TO BE REACTIVE
+                      iconSize: imageSize, // NEEDS TO BE REACTIVE
                       icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
                       onPressed: () {},
                     ),
@@ -449,7 +446,7 @@ class PlanDisplayCard extends StatefulWidget {
                               itemCount: members.length,
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
-                                childAspectRatio: 8,
+                                childAspectRatio: 6,  // Try 8, 6 and more on all screen types
                               ),
                               itemBuilder: (context, index) {
                                 return Center(
@@ -473,22 +470,27 @@ class PlanDisplayCard extends StatefulWidget {
                   Expanded( 
                     flex: 1,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
                           icon: const Icon(Icons.edit),
                           color: theme.icon,
+                          iconSize: iconSize,
                           tooltip: "Edit",
                           onPressed: () {},
                         ),
                         IconButton(
                           icon: const Icon(Icons.import_export),
                           color: theme.icon,
+                          iconSize: iconSize,
                           tooltip: "Export",
                           onPressed: () {},
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           color: theme.icon,
+                          iconSize: iconSize,
                           tooltip: "Delete",
                           onPressed: () {},
                         ),
