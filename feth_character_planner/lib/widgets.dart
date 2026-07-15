@@ -369,7 +369,7 @@ class PlanDisplayCard extends StatefulWidget {
         child: LayoutBuilder( 
           builder: (context, constraints) {
             // Columns for card names
-            const columns = 4;
+            //const columns = 4;
             // Columns for card stats
 
             // Card width based on screen dimensions
@@ -379,7 +379,7 @@ class PlanDisplayCard extends StatefulWidget {
             //final imageWidth = cardWidth * 0.10;
             //final buttonWidth = cardWidth * 0.10;
             final iconSize = cardWidth * 0.08;
-            final spacing = cardWidth * 0.02;
+            //final spacing = cardWidth * 0.02;
             //final runSpacing = cardWidth * 0.00385;
             //final nameWidth = ((cardWidth - (columns - 1) * spacing) / columns);
 
