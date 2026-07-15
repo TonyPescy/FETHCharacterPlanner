@@ -109,6 +109,10 @@ class MyPlansPage extends StatelessWidget {
   // routeName for current page checking
   static const routeName = "/plans";
 
+  // Will need to read data from JSON file
+  // This file will be found in /local and is user specific - names users_plan.json
+  // Could use it with item builder or may new whole logic behind it
+
 
 
   @override
@@ -125,7 +129,7 @@ class MyPlansPage extends StatelessWidget {
     //final buttonSize = math.min(math.min(screenWidth, screenHeight) * 0.28, 400.0);
 
     // Spacing scales with screen size.
-    final spacing = math.min(screenWidth * 0.04, 40.0);
+    final spacing = math.min(screenWidth * 0.04, 40.0); // 4% or 40 px
 
     return Scaffold(
       // Styling

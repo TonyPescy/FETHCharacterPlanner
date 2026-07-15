@@ -381,7 +381,7 @@ class PlanDisplayCard extends StatefulWidget {
             final imageSize = cardWidth * 0.08;
             final iconSize = imageSize * 0.33; // Same as image but seperated into 3 parts
 
-
+            // Will be filled using data that is read from single JSON file
             return AnimatedContainer(
               // Style
               height: cardHeight,
