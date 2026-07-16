@@ -118,6 +118,7 @@ class MyPlansPage extends StatefulWidget {
 }
 
 class _MyPlansPageState extends State<MyPlansPage> {
+  List<Plan> jsonPlans = [];
   List<Plan> housePlans = [];
   List<PlanCharacter> characterPlans = [];
 
@@ -133,17 +134,21 @@ class _MyPlansPageState extends State<MyPlansPage> {
     );
 
     final List<dynamic> jsonData = json.decode(jsonString);
-
-    housePlans = jsonData
+      jsonPlans = jsonData
+        .map((item) => Plan.fromJson(item))
+        .toList();
+    // House - character split happens later during display card code
+    /*
+    housePlans = jsonPlans
         .where((item) => item["type"] == "house")
         .map((item) => Plan.fromJson(item))
         .toList();
 
-    characterPlans = jsonData
-        .where((item) => item["type"] == "character_plan")
+    characterPlans = jsonPlans
+        .where((item) => item["type"] == "character")
         .map((item) => PlanCharacter.fromJson(item))
         .toList();
-
+    */
     setState(() {});
   }
 
@@ -151,7 +156,6 @@ class _MyPlansPageState extends State<MyPlansPage> {
   Widget build(BuildContext context) {
     // Variables for use in styling and theming
     final theme = context.watch<ThemeManager>().currentTheme;
-
     final screenWidth = MediaQuery.of(context).size.width;
     final spacing = math.min(screenWidth * 0.04, 40.0);
 
@@ -167,14 +171,14 @@ class _MyPlansPageState extends State<MyPlansPage> {
           child: ListView.separated(
             itemBuilder: (context, index) {
               return PlanDisplayCard(
-                plan: housePlans[index],
+                plan: jsonPlans[index],
               );
             },
             separatorBuilder: (context, index) => Divider(
               color: theme.background,
               thickness: 1.0,
             ),
-            itemCount: housePlans.length, // or however you want to display them
+            itemCount: jsonPlans.length, // Combined length of the two lists
           ),
         ),
       ),
