@@ -119,8 +119,8 @@ class MyPlansPage extends StatefulWidget {
 
 class _MyPlansPageState extends State<MyPlansPage> {
   List<Plan> jsonPlans = [];
-  List<Plan> housePlans = [];
-  List<PlanCharacter> characterPlans = [];
+  //List<Plan> housePlans = [];
+  //List<PlanCharacter> characterPlans = [];
 
   @override
   void initState() {
