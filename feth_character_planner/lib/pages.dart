@@ -137,18 +137,6 @@ class _MyPlansPageState extends State<MyPlansPage> {
       jsonPlans = jsonData
         .map((item) => Plan.fromJson(item))
         .toList();
-    // House - character split happens later during display card code
-    /*
-    housePlans = jsonPlans
-        .where((item) => item["type"] == "house")
-        .map((item) => Plan.fromJson(item))
-        .toList();
-
-    characterPlans = jsonPlans
-        .where((item) => item["type"] == "character")
-        .map((item) => PlanCharacter.fromJson(item))
-        .toList();
-    */
     setState(() {});
   }
 
