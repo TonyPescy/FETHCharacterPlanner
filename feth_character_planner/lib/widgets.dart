@@ -496,9 +496,19 @@ class PlanDisplayCard extends StatefulWidget {
         // Get RNG stats as stats
         final stats = widget.plan.characters[0].stats;
 
-        // Get character classes from plan
-        final classes = widget.plan.characters[0].classes;
-        
+        // Initialize lists fo
+        Map<String, int> classesMap = {};
+        // Get character classes and levels from plan
+        for (ClassHistory unitClass in widget.plan.characters[0].classes) {
+          Map<String, int> tempMap = {
+            "class": unitClass.name.toString(),
+            "levels": unitClass.levels.toInt()
+          };
+          classesMap.addEntries(unitClass.name, unitClass.levels);
+        }
+
+        //final classes = widget.plan.characters[0].classes;
+
         
 
         // Calculate low-luck stats for character

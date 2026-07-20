@@ -83,6 +83,14 @@ class ClassHistory {
       levels: json["levels"],
     );
   }
+
+  // to Map functon
+  Map<dynamic, int> toMap(){
+    return {
+      "class": name,
+      "levels": levels
+    };
+  }
 }
 // Class History End
 
