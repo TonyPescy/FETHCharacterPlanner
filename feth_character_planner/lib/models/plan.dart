@@ -85,10 +85,9 @@ class ClassHistory {
   }
 
   // to Map functon
-  Map<dynamic, int> toMap(){
+  Map<String, int> toMap(){
     return {
-      "class": name,
-      "levels": levels
+      name: levels,
     };
   }
 }
