@@ -503,6 +503,9 @@ class PlanDisplayCard extends StatefulWidget {
         
         // Calculate low-luck stats for character
         final lowLuckStats = Stats().getLowLuckStats(widget.plan.id, classes);
+
+        // Calculate Average Stats
+        final avgStats = Stats().getAverageStats(characterID, stats.rng1, stats.rng2, stats.rng3, lowLuckStats)
         
         return MouseRegion(
           cursor: SystemMouseCursors.click,

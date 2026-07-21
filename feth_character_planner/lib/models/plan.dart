@@ -95,9 +95,9 @@ class ClassHistory {
 
 // Stats Prediction Start
 class StatsPrediction {
-  Map<String, int> rng1;
-  Map<String, int> rng2;
-  Map<String, int> rng3;
+  Map<String, double> rng1;
+  Map<String, double> rng2;
+  Map<String, double> rng3;
 
   StatsPrediction({
     required this.rng1,
@@ -126,7 +126,7 @@ class StatsPrediction {
   }
 
 
-  static Map<String,int> _convertStats(
+  static Map<String,double> _convertStats(
       Map<String,dynamic> stats
   ){
 

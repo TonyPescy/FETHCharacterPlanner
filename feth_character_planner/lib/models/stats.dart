@@ -208,5 +208,35 @@ class Stats {
   }
   // Get Character Base Stats End
 
+  // Get Average Stats Start
+  // Calculates average stats for the character
+  // Combines all stats from other generations for their character then divides by 4 (# of prior generatons)
+  // Parameters: string characterID - used to find max stats attributed to the character,
+  //      Maps gen0-3
+  //          stat: stat name
+  //          statVal: current value of that stat
+  // Returns: Map averageStats - List of all calculated stats in order
+  //            stat: stat name
+  //            statVal: how much of a stat the char has
+  Future<Map<String, double>> getAverageStats(String characterID, Map<String, double> gen0, Map<String, double> gen1, Map<String, double> gen2, Map<String, double> gen3,) async {
+    // Get base stats to add growing stats to
+    //Map<String, double> predictedStats = await getCharacterBaseStats(characterID);
+    
+    // Get max stats
+    Map<String, double> maxStats = await getCharacterMaxStats(characterID);
+
+    // Iterate through stats once again - Checking for max stats before returning
+    averageStats.forEach((stat, statValue) async { 
+      // If predicted stat is higher than the max stat value for this character
+      if (statValue > maxStats[stat]!) {
+        averageStats[stat] = maxStats[stat]!;   // Lower stat to the max
+      }
+      // Else nothing happens and stats remain unchanged
+    });
+
+    return averageStats;
+  }
+  // Get Low Luck Stats End
+
 
 }
