@@ -496,8 +496,8 @@ class PlanDisplayCard extends StatefulWidget {
         // Get RNG stats as stats
         final stats = widget.plan.characters[0].stats;
 
-        final Map<String, int> classes = widget.plan.characters[0].classes.fold(
-          <String, int>{},
+        final Map<String, double> classes = widget.plan.characters[0].classes.fold(
+          <String, double>{},
           (map, classHistory) => map..addAll(classHistory.toMap()),
         );
         
@@ -505,7 +505,7 @@ class PlanDisplayCard extends StatefulWidget {
         final lowLuckStats = Stats().getLowLuckStats(widget.plan.id, classes);
 
         // Calculate Average Stats
-        final avgStats = Stats().getAverageStats(characterID, stats.rng1, stats.rng2, stats.rng3, lowLuckStats)
+        final avgStats = Stats().getAverageStats(widget.plan.id, stats.rng1, stats.rng2, stats.rng3, lowLuckStats)
         
         return MouseRegion(
           cursor: SystemMouseCursors.click,

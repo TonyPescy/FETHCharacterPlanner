@@ -21,7 +21,7 @@ class Stats {
   // Returns: Map lowLuckStats - List of all calculated stats in order
   //            stat: stat name
   //            statVal: how much of a stat the char has
-  Future<Map<String, double>> getLowLuckStats(String characterID, Map<String, int> classLevels) async {
+  Future<Map<String, double>> getLowLuckStats(String characterID, Map<String, double> classLevels) async {
     // Get base stats to add growing stats to
     Map<String, double> predictedStats = await getCharacterBaseStats(characterID);
 
@@ -220,7 +220,10 @@ class Stats {
   //            statVal: how much of a stat the char has
   Future<Map<String, double>> getAverageStats(String characterID, Map<String, double> gen0, Map<String, double> gen1, Map<String, double> gen2, Map<String, double> gen3,) async {
     // Get base stats to add growing stats to
-    //Map<String, double> predictedStats = await getCharacterBaseStats(characterID);
+    final Map<String, double> averageStats = [gen0, gen1, gen2, gen3].fold(
+      <String, double>{},
+      ()
+      )
     
     // Get max stats
     Map<String, double> maxStats = await getCharacterMaxStats(characterID);
