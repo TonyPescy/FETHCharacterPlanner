@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class Stats {
   // Constant stat abbreviations in order of appeArance - Used for displaying and more
   static const statsList = ["HP", "Str", "Mag", "Dex", "Spd", "Lck", "Def", "Res", "Cha"];
-  static const numOfGenerations = 4;
+  static const numOfGenerations = 4.0;
   // Links to JSON files containing growths, base stats, etc
   static const baseStatsLinks = "assets/data/fe3h_character_base_stats.json";
   static const characterGrowthLink = "assets/data/fe3h_character_growth_rates.json";
@@ -40,8 +40,13 @@ class Stats {
       Map<String, double> growthsForLevels = await getCombinedGrowthRates(characterID, characterClass);
       // In each class iterate through all growth stats
       growthsForLevels.forEach((stat, growthRate) {
+        // DEBUG 
+        print("LOWLUCKCALC: $stat Growth: $growthRate");
+        double growthRatePercent = growthRate * 0.01;
+        print("LOWLUCKCALC: $stat Growth as %: $growthRatePercent");
         // Get levels that will be gained for this stat during these levels spent as this class
-        double levelsGained = (growthRate * levels).round().toDouble();
+        double levelsGained = (growthRatePercent * levels); // Divides by 10 to convert to percent
+        levelsGained = levelsGained.round().toDouble();
         predictedStats[stat] = predictedStats[stat]! + levelsGained;
       });
 
@@ -54,6 +59,7 @@ class Stats {
     predictedStats.forEach((stat, statValue) async { 
       // If predicted stat is higher than the max stat value for this character
       if (statValue > maxStats[stat]!) {
+
         predictedStats[stat] = maxStats[stat]!;   // Lower stat to the max
       }
       // Else nothing happens and stats remain unchanged
@@ -239,9 +245,19 @@ class Stats {
 
     // Iterate through all stats in statList to access values in gen0-gen3, averageStats, and maxStats
     for (String stat in statsList) {
+      // DEBUG
+      print("Gen0 $stat: ${gen0[stat]!}");
+      print("Gen1 $stat: ${gen1[stat]!}");
+      print("Gen2 $stat: ${gen2[stat]!}");
+      print("Gen3 $stat: ${gen3[stat]!}");
+      print((gen0[stat]! + gen1[stat]! + gen2[stat]! + gen3[stat]!).toString());
+
       // Get stats from gen0-gen3 and combine to get average stats
       // For each stat calculate the average stat and add it to averageStats Map 
-      double tempStat = ((gen0[stat]! + gen1[stat]! + gen2[stat]! + gen3[stat]!) / numOfGenerations).round().toDouble(); // Get average for stat - Rounded to nearest whole number - toDouble becasue .round() returns int
+      double tempStat = (((gen0[stat]! + gen1[stat]! + gen2[stat]! + gen3[stat]!) / (numOfGenerations))).toDouble(); // Get average for stat - Rounded to nearest whole number
+      
+      // Round and convert back to double for use in averageStats Map
+      tempStat = tempStat.round().toDouble();
 
       // Debug - To be removed/commented out
       print("Average stat Calculation BEFORE max stat is considered: $stat: $tempStat! Max is: $maxStats[stat]");

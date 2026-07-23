@@ -370,6 +370,9 @@ class PlanDisplayCard extends StatefulWidget {
             return Center(
               child: Text(
                 members[index].id,
+                style: TextStyle(
+                  color: theme.text,
+                ),
                 textAlign: TextAlign.center,
               ),
             );
