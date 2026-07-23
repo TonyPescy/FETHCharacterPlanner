@@ -8,7 +8,7 @@ import 'package:feth_character_planner/models/plan.dart';
 
 // Topbar class
 class MyTopBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title; // Current page name
+  final String title;       // Current page name
   final double height;      // Height based on media query
 
   // List containing pages that will confirm that the user wishes to go to homepage - Used on editing pages (create character, create house, etc...)
@@ -341,7 +341,7 @@ class PlanDisplayCard extends StatefulWidget {
     }
 
     @override
-    Widget build(BuildContext context) {
+    Future<Widget> build(BuildContext context) async {
       final theme = context.watch<ThemeManager>().currentTheme;
 
       // Create different display cards based on type of plan
@@ -501,11 +501,15 @@ class PlanDisplayCard extends StatefulWidget {
           (map, classHistory) => map..addAll(classHistory.toMap()),
         );
         
+        // Get characters final class - Only 1 charcter so access character with 0
+        //widget.plan.characters[0].currentClass;
+        // Get characters total level
+
         // Calculate low-luck stats for character
         final lowLuckStats = Stats().getLowLuckStats(widget.plan.id, classes);
 
         // Calculate Average Stats
-        final avgStats = Stats().getAverageStats(widget.plan.id, stats.rng1, stats.rng2, stats.rng3, lowLuckStats)
+        final avgStats = await Stats().getAverageStats(widget.plan.id, stats.rng1, stats.rng2, stats.rng3, await lowLuckStats);
         
         return MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -573,7 +577,7 @@ class PlanDisplayCard extends StatefulWidget {
                         // Plan Name
                         children: [
                           Text(
-                            widget.plan.name,
+                            "$widget.plan.name | $widget.plan.characters[0].currentClass | $widget.plan.characters[0].level.toString()", // Plan character is accessed suing 0 as it is the only charatcer in a character type plan
                             style: TextStyle(
                               fontSize: AppTextSizes.heading(context),
                               fontWeight: FontWeight.bold,
@@ -596,9 +600,12 @@ class PlanDisplayCard extends StatefulWidget {
                                   childAspectRatio: 6,  // Try 8, 6 and more on all screen types
                                 ),
                                 itemBuilder: (context, index) {
+                                  final statKey = Stats.statsList[index];   // Get stats for accessing averageStats
+                                  final value = avgStats[statKey];    // Get stat value from average stats
+
                                   return Center(
                                     child: Text(
-                                      avg[index].id,
+                                      value?.toString() ?? "XX", // Display value for average stat, otherwise display XX
                                       textAlign: TextAlign.center,
                                     ),
                                   );
@@ -659,6 +666,7 @@ class PlanDisplayCard extends StatefulWidget {
       }
       //final members = widget.plan.characters;
 
+      /*
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => hovered = true),
@@ -721,7 +729,6 @@ class PlanDisplayCard extends StatefulWidget {
                     flex: 8,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // If plan is a house plan
                       children: [
                         Text(
                           widget.plan.name,
@@ -800,7 +807,7 @@ class PlanDisplayCard extends StatefulWidget {
             );
           }
         )
-      );
+      );*/
     }
   }
 // Plan Display Card End

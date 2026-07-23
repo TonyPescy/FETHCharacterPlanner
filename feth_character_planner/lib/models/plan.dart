@@ -58,7 +58,7 @@ class PlanCharacter {
     return classes.last.name;
   }
 
-  int get level {
+  double get level {
     return classes.fold(
       0,
       (sum, item) => sum + item.levels,
@@ -70,7 +70,7 @@ class PlanCharacter {
 // Class History Start
 class ClassHistory {
   String name;
-  int levels;
+  double levels;
 
   ClassHistory({
     required this.name,
@@ -85,7 +85,7 @@ class ClassHistory {
   }
 
   // to Map functon
-  Map<String, int> toMap(){
+  Map<String, double> toMap(){
     return {
       name: levels,
     };
