@@ -24,4 +24,5 @@ flutter:
   assets:
     - assets/images/
     - assets/data/
+    #- assets/data/fe3h_character_base_stats.json
     - local/user_plans.json

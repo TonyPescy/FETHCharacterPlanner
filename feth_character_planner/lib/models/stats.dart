@@ -6,11 +6,14 @@ class Stats {
   static const statsList = ["HP", "Str", "Mag", "Dex", "Spd", "Lck", "Def", "Res", "Cha"];
   static const numOfGenerations = 4;
   // Links to JSON files containing growths, base stats, etc
-  static const baseStatsLinks = "feth_character_planner\\assets\\data\\fe3h_character_base_stats.json";
-  static const characterGrowthLink = "feth_character_planner\\assets\\data\\fe3h_class_growth_rates.json";
-  static const classGrowthLink = "feth_character_planner\\assets\\data\\fe3h_character_growth_rates.json";
-  static const characterMaxStatsLink = "feth_character_planner\\assets\\data\\fe3h_character_max_stats.json";
+  static const baseStatsLinks = "assets/data/fe3h_character_base_stats.json";
+  static const characterGrowthLink = "assets/data/fe3h_character_growth_rates.json";
+  static const classGrowthLink = "assets/data/fe3h_class_growth_rates.json";
+  static const characterMaxStatsLink = "assets/data/fe3h_character_max_stats.json";
 
+  static String _normalizeName(String value) {
+    return value.trim().toLowerCase();
+  }
 
   // Get Low Luck Stats Start
   // Calculates low-luck stats for the character
@@ -23,17 +26,22 @@ class Stats {
   //            stat: stat name
   //            statVal: how much of a stat the char has
   Future<Map<String, double>> getLowLuckStats(String characterID, Map<String, double> classLevels) async {
+    // Debug
+    print("GetLowLuckStats characterID: $characterID");
     // Get base stats to add growing stats to
     Map<String, double> predictedStats = await getCharacterBaseStats(characterID);
+
+    // Debug
+    print("BaseStats characterID: $characterID");
 
     // Iterate through each class in classLevels
     classLevels.forEach((characterClass, levels) async {
       // Get combined growth rates for this character and class combination
       Map<String, double> growthsForLevels = await getCombinedGrowthRates(characterID, characterClass);
       // In each class iterate through all growth stats
-      growthsForLevels.forEach( (stat, growthRate) {
+      growthsForLevels.forEach((stat, growthRate) {
         // Get levels that will be gained for this stat during these levels spent as this class
-        double levelsGained = (growthRate * levels).round() as double;
+        double levelsGained = (growthRate * levels).round().toDouble();
         predictedStats[stat] = predictedStats[stat]! + levelsGained;
       });
 
@@ -66,7 +74,7 @@ class Stats {
 
     // Find the character
     final Map<String, dynamic> character = data.firstWhere(
-      (c) => c["name"] == characterID.toLowerCase(),    // Needs to be lower case as it may be used for looking up files
+      (c) => _normalizeName(c["name"].toString()) == _normalizeName(characterID),
       orElse: () => throw Exception("Character '$characterID' not found."),
     );
 
@@ -96,7 +104,7 @@ class Stats {
 
     // Find the character
     final Map<String, dynamic> unitClass = data.firstWhere(
-      (c) => c["name"] == classID,    // Does not need to be lowercase
+      (c) => _normalizeName(c["name"].toString()) == _normalizeName(classID),
       orElse: () => throw Exception("Character '$classID' not found."),
     );
 
@@ -118,6 +126,10 @@ class Stats {
   // Get Character Base Stats Start
   // Parameters: string characterID - used to find stats/growths attributed to the character,
   Future<Map<String, double>> getCharacterBaseStats(String characterID) async {
+    // Debug
+    print("GetBaseStats characterID: $characterID");
+    // Debug
+    print("BaseStats Link: $baseStatsLinks");
     // Load the JSON file
     final String jsonString = await rootBundle.loadString(baseStatsLinks);
 
@@ -126,7 +138,7 @@ class Stats {
 
     // Find the character
     final Map<String, dynamic> baseStats = data.firstWhere(
-      (c) => c["name"] == characterID.toLowerCase(),   // Needs to be lower case as it may be used for looking up files
+      (c) => _normalizeName(c["name"].toString()) == _normalizeName(characterID),
       orElse: () => throw Exception("Character '$characterID' not found."),
     );
 
@@ -190,7 +202,7 @@ class Stats {
 
     // Find the character
     final Map<String, dynamic> maxsStats = data.firstWhere(
-      (c) => c["name"] == characterID.toLowerCase(),   // Needs to be lower case as it may be used for looking up files
+      (c) => _normalizeName(c["name"].toString()) == _normalizeName(characterID),
       orElse: () => throw Exception("Character '$characterID' not found."),
     );
 

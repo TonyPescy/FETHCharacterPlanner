@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "feth_character_planner",
+            "cwd": "feth_character_planner",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "feth_character_planner (profile mode)",
+            "cwd": "feth_character_planner",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "feth_character_planner (release mode)",
+            "cwd": "feth_character_planner",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

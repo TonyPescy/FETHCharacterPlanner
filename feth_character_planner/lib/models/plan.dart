@@ -80,7 +80,7 @@ class ClassHistory {
   factory ClassHistory.fromJson(Map<String, dynamic> json) {
     return ClassHistory(
       name: json["name"],
-      levels: json["levels"],
+      levels: json["levels"].toDouble(),
     );
   }
 
@@ -134,7 +134,7 @@ class StatsPrediction {
       (key,value) =>
         MapEntry(
           key,
-          value,
+          value.toDouble(),
         ),
     );
 

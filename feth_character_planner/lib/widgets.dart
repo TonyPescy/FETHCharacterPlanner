@@ -341,359 +341,128 @@ class PlanDisplayCard extends StatefulWidget {
     }
 
     @override
-    Future<Widget> build(BuildContext context) async {
+    Widget build(BuildContext context) {
       final theme = context.watch<ThemeManager>().currentTheme;
 
-      // Create different display cards based on type of plan
-      // House vs Character
       if (widget.plan.type == "house") {
-        final members = widget.plan.characters;
+        return _buildHouseCard(context, theme);
+      } else if (widget.plan.type == "character") {
+        return _buildCharacterCard(context, theme);
+      } else {
+        return const SizedBox.shrink(); // Error/empty state
+      }
+    }
 
-        return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => hovered = true),
-        onExit: (_) => setState(() => hovered = false),
+    Widget _buildHouseCard(BuildContext context, AppThemeColors theme) {
+      final members = widget.plan.characters;
 
-        child: LayoutBuilder( 
-          builder: (context, constraints) {
-            // Columns for card names
-            //const columns = 4;
-            // Columns for card stats
-
-            // Card width based on screen dimensions
-            final cardWidth = MediaQuery.of(context).size.width * 0.80;
-            final cardHeight = MediaQuery.of(context).size.height * 0.20; // 20%
-            // Sizing based on card width
-            //final imageWidth = cardWidth * 0.10;
-            //final buttonWidth = cardWidth * 0.10;
-            final imageSize = cardWidth * 0.08;
-            final iconSize = imageSize * 0.33; // Same as image but seperated into 3 parts
-
-            // Will be filled using data that is read from single JSON file
-            return AnimatedContainer(
-              // Style
-              height: cardHeight,
-              // Hover effects
-              duration: const Duration(milliseconds: 150),
-              transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
-              decoration: BoxDecoration(
-                color: theme.primary,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: hovered ? theme.icon : Colors.transparent,
-                  width: 3,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: hovered ? 0.30 : 0.12),
-                    blurRadius: hovered ? 24 : 8,
-                    spreadRadius: hovered ? 2 : 0,
-                    offset: Offset(0, hovered ? 10 : 4),
-                  ),
-                ],
+      return _buildCardShell(
+        context: context,
+        theme: theme,
+        content: GridView.builder(
+          controller: _scrollController,
+          itemCount: members.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            childAspectRatio: 6,
+          ),
+          itemBuilder: (context, index) {
+            return Center(
+              child: Text(
+                members[index].id,
+                textAlign: TextAlign.center,
               ),
-              child: Row(
-                children: [
-                  // Left Character PFP/House PFP
-                  Expanded(
-                    flex: 1, // NEEDS TO BE REACTIVE
-                    child: IconButton(
-                      iconSize: imageSize, // NEEDS TO BE REACTIVE
-                      icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
-                      onPressed: () {},
-                    ),
-                  ),
+            );
+          },
+        ),
+        title: widget.plan.name,
+      );
+    }
 
-                  //const SizedBox(width: 16),
+    Widget _buildCharacterCard(BuildContext context, AppThemeColors theme) {
+      final character = widget.plan.characters[0];
+      final stats = character.stats;
+      final classes = character.classes.fold(
+        <String, double>{},
+        (map, classHistory) => map..addAll(classHistory.toMap()),
+      );
 
-                  // Middle - Character Stats or House Units
-                  Expanded(
-                    flex: 8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // If plan is a house plan
-                      children: [
-                        Text(
-                          widget.plan.name,
-                          style: TextStyle(
-                            fontSize: AppTextSizes.heading(context),
-                            fontWeight: FontWeight.bold,
-                            color: theme.surface,
-                            height: 1.0, // Shorten to make more room for Scrollbar content
-                          ),
-                        ),
-
-                        //const SizedBox(height: 12),
-                        // Content - Unit Names
-                        Expanded(
-                          child: Scrollbar(
-                            controller: _scrollController,
-                            //thumbVisibility: true,
-                            child: GridView.builder(
-                              controller: _scrollController,
-                              itemCount: members.length,
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                childAspectRatio: 6,  // Try 8, 6 and more on all screen types
-                              ),
-                              itemBuilder: (context, index) {
-                                return Center(
-                                  child: Text(
-                                    members[index].id,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                      // If plan is a individual character plan
-                    ),
-                  ),
-
-                  //const SizedBox(width: 16),
-
-                  // Right - Edit, Export, and delete buttons
-                  Expanded( 
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          color: theme.icon,
-                          iconSize: iconSize,
-                          tooltip: "Edit",
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.import_export),
-                          color: theme.icon,
-                          iconSize: iconSize,
-                          tooltip: "Export",
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          color: theme.icon,
-                          iconSize: iconSize,
-                          tooltip: "Delete",
-                          onPressed: () {},
-                        ),
-                      ],
-                    )
-                  )
-                ]
-              )
+      return FutureBuilder<Map<String, dynamic>>(
+        future: _calculateCharacterStats(classes, stats),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _buildCardShell(
+              context: context,
+              theme: theme,
+              content: const Center(child: CircularProgressIndicator()),
+              title: "${widget.plan.name} | ${character.currentClass} | ${character.level.toInt()}",
             );
           }
-        )
-      );
-      } else if (widget.plan.type == "character") {
-        // Will need to calculate the non-RNG stats as the AVG of all 4 are shown here
-        // Get RNG stats as stats
-        final stats = widget.plan.characters[0].stats;
 
-        final Map<String, double> classes = widget.plan.characters[0].classes.fold(
-          <String, double>{},
-          (map, classHistory) => map..addAll(classHistory.toMap()),
-        );
-        
-        // Get characters final class - Only 1 charcter so access character with 0
-        //widget.plan.characters[0].currentClass;
-        // Get characters total level
+          if (snapshot.hasError) {
+            return _buildCardShell(
+              context: context,
+              theme: theme,
+              content: const Center(child: Text("Error loading stats")),
+              title: "${widget.plan.name} | ${character.currentClass} | ${character.level.toInt()}",
+            );
+          }
 
-        // Calculate low-luck stats for character
-        final lowLuckStats = Stats().getLowLuckStats(widget.plan.id, classes);
+          final avgStats = snapshot.data ?? {};
 
-        // Calculate Average Stats
-        final avgStats = await Stats().getAverageStats(widget.plan.id, stats.rng1, stats.rng2, stats.rng3, await lowLuckStats);
-        
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => setState(() => hovered = true),
-          onExit: (_) => setState(() => hovered = false),
-
-          child: LayoutBuilder( 
-            builder: (context, constraints) {
-              // Columns for card names
-              //const columns = 4;
-              // Columns for card stats
-
-              // Card width based on screen dimensions
-              final cardWidth = MediaQuery.of(context).size.width * 0.80;
-              final cardHeight = MediaQuery.of(context).size.height * 0.20; // 20%
-              // Sizing based on card width
-              //final imageWidth = cardWidth * 0.10;
-              //final buttonWidth = cardWidth * 0.10;
-              final imageSize = cardWidth * 0.08;
-              final iconSize = imageSize * 0.33; // Same as image but seperated into 3 parts
-
-              // Will be filled using data that is read from single JSON file
-              return AnimatedContainer(
-                // Style
-                height: cardHeight,
-                // Hover effects
-                duration: const Duration(milliseconds: 150),
-                transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
-                decoration: BoxDecoration(
-                  color: theme.primary,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: hovered ? theme.icon : Colors.transparent,
-                    width: 3,
+          return _buildCardShell(
+            context: context,
+            theme: theme,
+            content: GridView.builder(
+              controller: _scrollController,
+              itemCount: Stats.statsList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                childAspectRatio: 6,
+              ),
+              itemBuilder: (context, index) {
+                final statKey = Stats.statsList[index];
+                final value = avgStats[statKey].toInt();  // yoInt removes unnecceary XX.0
+                
+                return Center(
+                  child: Text(
+                    "$statKey: ${value?.toString()}", //?? "XX",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: theme.text,
+                    ),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: hovered ? 0.30 : 0.12),
-                      blurRadius: hovered ? 24 : 8,
-                      spreadRadius: hovered ? 2 : 0,
-                      offset: Offset(0, hovered ? 10 : 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    // Left Character PFP/House PFP
-                    Expanded(
-                      flex: 1, // NEEDS TO BE REACTIVE
-                      child: IconButton(
-                        iconSize: imageSize, // NEEDS TO BE REACTIVE
-                        icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
-                        onPressed: () {},
-                      ),
-                    ),
+                  
+                );
+              },
+            ),
+            title: "${widget.plan.name} | ${character.currentClass} | ${character.level.toInt()}",
+          );
+        },
+      );
+    }
 
-                    //const SizedBox(width: 16),
+    Widget _buildCardShell({
+      required BuildContext context,
+      required AppThemeColors theme,
+      required Widget content,
+      required String title,
+    }) {
+      final cardWidth = MediaQuery.of(context).size.width * 0.80;
+      final cardHeight = MediaQuery.of(context).size.height * 0.20;
+      final imageSize = cardWidth * 0.08;
+      final iconSize = imageSize * 0.33;
 
-                    // Middle - Character Stats or House Units
-                    Expanded(
-                      flex: 8,
-                      // Start changes for character specific stuff
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // Plan Name
-                        children: [
-                          Text(
-                            "$widget.plan.name | $widget.plan.characters[0].currentClass | $widget.plan.characters[0].level.toString()", // Plan character is accessed suing 0 as it is the only charatcer in a character type plan
-                            style: TextStyle(
-                              fontSize: AppTextSizes.heading(context),
-                              fontWeight: FontWeight.bold,
-                              color: theme.surface,
-                              height: 1.0, // Shorten to make more room for Scrollbar content
-                            ),
-                          ),
-
-                          //const SizedBox(height: 12),
-                          // Content - Unit Stats
-                          Expanded(
-                            child: Scrollbar(
-                              controller: _scrollController,
-                              //thumbVisibility: true,
-                              child: GridView.builder(
-                                controller: _scrollController,
-                                itemCount: Stats.statsList.length,  // Length of stats to be shown
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
-                                  childAspectRatio: 6,  // Try 8, 6 and more on all screen types
-                                ),
-                                itemBuilder: (context, index) {
-                                  final statKey = Stats.statsList[index];   // Get stats for accessing averageStats
-                                  final value = avgStats[statKey];    // Get stat value from average stats
-
-                                  return Center(
-                                    child: Text(
-                                      value?.toString() ?? "XX", // Display value for average stat, otherwise display XX
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //const SizedBox(width: 16),
-
-                    // Right - Edit, Export, and delete buttons
-                    Expanded( 
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            color: theme.icon,
-                            iconSize: iconSize,
-                            tooltip: "Edit",
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.import_export),
-                            color: theme.icon,
-                            iconSize: iconSize,
-                            tooltip: "Export",
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: theme.icon,
-                            iconSize: iconSize,
-                            tooltip: "Delete",
-                            onPressed: () {},
-                          ),
-                        ],
-                      )
-                    )
-                  ]
-                )
-              );
-            }
-          )
-        );
-
-
-
-      } else {  // Error or no plans saved
-
-
-
-      }
-      //final members = widget.plan.characters;
-
-      /*
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => hovered = true),
         onExit: (_) => setState(() => hovered = false),
-
-        child: LayoutBuilder( 
+        child: LayoutBuilder(
           builder: (context, constraints) {
-            // Columns for card names
-            //const columns = 4;
-            // Columns for card stats
-
-            // Card width based on screen dimensions
-            final cardWidth = MediaQuery.of(context).size.width * 0.80;
-            final cardHeight = MediaQuery.of(context).size.height * 0.20; // 20%
-            // Sizing based on card width
-            //final imageWidth = cardWidth * 0.10;
-            //final buttonWidth = cardWidth * 0.10;
-            final imageSize = cardWidth * 0.08;
-            final iconSize = imageSize * 0.33; // Same as image but seperated into 3 parts
-
-            // Will be filled using data that is read from single JSON file
             return AnimatedContainer(
-              // Style
               height: cardHeight,
-              // Hover effects
               duration: const Duration(milliseconds: 150),
-              transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0), // Lift above ovther cards
+              transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0),
               decoration: BoxDecoration(
                 color: theme.primary,
                 borderRadius: BorderRadius.circular(12),
@@ -712,67 +481,43 @@ class PlanDisplayCard extends StatefulWidget {
               ),
               child: Row(
                 children: [
-                  // Left Character PFP/House PFP
+                  // Left - Profile Picture
                   Expanded(
-                    flex: 1, // NEEDS TO BE REACTIVE
+                    flex: 1,
                     child: IconButton(
-                      iconSize: imageSize, // NEEDS TO BE REACTIVE
-                      icon: const Icon(Icons.add_photo_alternate),  // PLACEHOLDER
+                      iconSize: imageSize,
+                      icon: const Icon(Icons.add_photo_alternate),
                       onPressed: () {},
                     ),
                   ),
 
-                  //const SizedBox(width: 16),
-
-                  // Middle - Character Stats or House Units
+                  // Middle - Content
                   Expanded(
                     flex: 8,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.plan.name,
+                          title,
                           style: TextStyle(
                             fontSize: AppTextSizes.heading(context),
                             fontWeight: FontWeight.bold,
                             color: theme.surface,
-                            height: 1.0, // Shorten to make more room for Scrollbar content
+                            height: 1.0,
                           ),
                         ),
-
-                        //const SizedBox(height: 12),
-
                         Expanded(
                           child: Scrollbar(
                             controller: _scrollController,
-                            //thumbVisibility: true,
-                            child: GridView.builder(
-                              controller: _scrollController,
-                              itemCount: members.length,
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                childAspectRatio: 6,  // Try 8, 6 and more on all screen types
-                              ),
-                              itemBuilder: (context, index) {
-                                return Center(
-                                  child: Text(
-                                    members[index].id,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-                              },
-                            ),
+                            child: content,
                           ),
                         ),
                       ],
-                      // If plan is a individual character plan
                     ),
                   ),
 
-                  //const SizedBox(width: 16),
-
-                  // Right - Edit, Export, and delete buttons
-                  Expanded( 
+                  // Right - Action Buttons
+                  Expanded(
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -800,14 +545,29 @@ class PlanDisplayCard extends StatefulWidget {
                           onPressed: () {},
                         ),
                       ],
-                    )
+                    ),
                   )
-                ]
-              )
+                ],
+              ),
             );
-          }
-        )
-      );*/
+          },
+        ),
+      );
+    }
+
+    Future<Map<String, dynamic>> _calculateCharacterStats(
+      Map<String, double> classes,
+      StatsPrediction stats,
+    ) async {
+      final lowLuckStats = Stats().getLowLuckStats(widget.plan.name, classes);  // ID issues - Solved
+      final avgStats = await Stats().getAverageStats(
+        widget.plan.id,
+        stats.rng1,
+        stats.rng2,
+        stats.rng3,
+        await lowLuckStats,
+      );
+      return avgStats;
     }
   }
 // Plan Display Card End
