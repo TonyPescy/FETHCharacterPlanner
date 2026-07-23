@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 class Stats {
   // Constant stat abbreviations in order of appeArance - Used for displaying and more
   static const statsList = ["HP", "Str", "Mag", "Dex", "Spd", "Lck", "Def", "Res", "Cha"];
+  static const numOfGenerations = 4;
   // Links to JSON files containing growths, base stats, etc
   static const baseStatsLinks = "feth_character_planner\\assets\\data\\fe3h_character_base_stats.json";
   static const characterGrowthLink = "feth_character_planner\\assets\\data\\fe3h_class_growth_rates.json";
@@ -219,23 +220,31 @@ class Stats {
   //            stat: stat name
   //            statVal: how much of a stat the char has
   Future<Map<String, double>> getAverageStats(String characterID, Map<String, double> gen0, Map<String, double> gen1, Map<String, double> gen2, Map<String, double> gen3,) async {
-    // Get base stats to add growing stats to
-    final Map<String, double> averageStats = [gen0, gen1, gen2, gen3].fold(
-      <String, double>{},
-      ()
-      )
-    
+    // Declare averageStats map as empty map
+    Map<String, double> averageStats = {};
     // Get max stats
     Map<String, double> maxStats = await getCharacterMaxStats(characterID);
 
-    // Iterate through stats once again - Checking for max stats before returning
-    averageStats.forEach((stat, statValue) async { 
-      // If predicted stat is higher than the max stat value for this character
-      if (statValue > maxStats[stat]!) {
-        averageStats[stat] = maxStats[stat]!;   // Lower stat to the max
+    // Iterate through all stats in statList to access values in gen0-gen3, averageStats, and maxStats
+    for (String stat in statsList) {
+      // Get stats from gen0-gen3 and combine to get average stats
+      // For each stat calculate the average stat and add it to averageStats Map 
+      double tempStat = ((gen0[stat]! + gen1[stat]! + gen2[stat]! + gen3[stat]!) / numOfGenerations).round().toDouble(); // Get average for stat - Rounded to nearest whole number - toDouble becasue .round() returns int
+
+      // Debug - To be removed/commented out
+      print("Average stat Calculation BEFORE max stat is considered: $stat: $tempStat! Max is: $maxStats[stat]");
+
+      // Compare to max stats and set to max value, if and only if the max value was exceeded
+      if (tempStat > maxStats[stat]!) {
+        tempStat = maxStats[stat]!;   // Set to max stat value
       }
-      // Else nothing happens and stats remain unchanged
-    });
+
+      // Debug - To be removed/commented out
+      print("Average stat Calculation AFTER max stat is considered: $stat: $tempStat! Max is: $maxStats[stat]");
+    
+      // Assign tempStat to averageStats
+      averageStats[stat] = tempStat;
+    }
 
     return averageStats;
   }
