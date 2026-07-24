@@ -55,7 +55,7 @@ POTNETIALLY CHANGE THEM TO BE THE ACCENT COLORS?!
 ### Default
 
 #### FETH Purple
-short Descriptions
+Dark theme based on the purple UI present in Fire Emblem Three Houses
 
 ### Generic
 
