@@ -71,7 +71,7 @@ short Descriptions
 short Descriptions
 
 #### Black Eagles
-short Descriptions
+Dark theme based on the red and black house colors present within the Black Eagles House
 
 #### Black Eagles (Alternative)
 short Descriptions
