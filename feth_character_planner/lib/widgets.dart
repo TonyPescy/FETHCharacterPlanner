@@ -1,3 +1,4 @@
+import 'package:feth_character_planner/models/helpers.dart';
 import 'package:feth_character_planner/models/stats.dart';
 import 'package:flutter/material.dart';
 import 'package:feth_character_planner/themes.dart';
@@ -439,7 +440,7 @@ class PlanDisplayCard extends StatefulWidget {
                 );
               },
             ),
-            title: "${widget.plan.name} | ${character.currentClass} | ${character.level.toInt()}",
+            title: "${titleCase(widget.plan.id)} | ${character.currentClass} | ${character.level.toInt()}",
           );
         },
       );
@@ -564,7 +565,7 @@ class PlanDisplayCard extends StatefulWidget {
     ) async {
       final lowLuckStats = Stats().getLowLuckStats(widget.plan.name, classes);  // ID issues - Solved
       final avgStats = await Stats().getAverageStats(
-        widget.plan.id,
+        widget.plan.name,
         stats.rng1,
         stats.rng2,
         stats.rng3,
