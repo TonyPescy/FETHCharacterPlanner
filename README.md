@@ -60,7 +60,7 @@ Dark theme based on the purple UI present in Fire Emblem Three Houses
 ### Generic
 
 #### Light
-short DescriptioN!
+short Descriptions
 
 #### Dark
 short Descriptions
