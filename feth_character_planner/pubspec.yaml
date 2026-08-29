@@ -23,6 +23,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/house_sigils/
+    - assets/images/characters/
     - assets/data/
-    #- assets/data/fe3h_character_base_stats.json
     - local/user_plans.json

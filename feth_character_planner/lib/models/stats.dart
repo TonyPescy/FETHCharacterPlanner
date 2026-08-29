@@ -277,6 +277,4 @@ class Stats {
     return averageStats;
   }
   // Get Low Luck Stats End
-
-
 }

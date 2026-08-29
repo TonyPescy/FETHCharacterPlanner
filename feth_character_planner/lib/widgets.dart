@@ -5,6 +5,7 @@ import 'package:feth_character_planner/themes.dart';
 import 'package:feth_character_planner/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:feth_character_planner/models/plan.dart';
+import 'package:feth_character_planner/models/images.dart';
 //import 'dart:convert';
 
 // Topbar class
@@ -430,7 +431,7 @@ class PlanDisplayCard extends StatefulWidget {
                 
                 return Center(
                   child: Text(
-                    "$statKey: ${value?.toString()}", //?? "XX",
+                    "$statKey: ${value?.toString()}", // ?? "XX",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: theme.text,
@@ -452,10 +453,11 @@ class PlanDisplayCard extends StatefulWidget {
       required Widget content,
       required String title,
     }) {
-      final cardWidth = MediaQuery.of(context).size.width * 0.80;
+      //final cardWidth = MediaQuery.of(context).size.width * 0.80;
       final cardHeight = MediaQuery.of(context).size.height * 0.20;
-      final imageSize = cardWidth * 0.08;
-      final iconSize = imageSize * 0.33;
+      final imageSize = cardHeight * 0.40;
+      final iconSize = imageSize * 0.20;
+      final cardImage = Images.getCardImage(widget.plan);
 
       return MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -488,11 +490,7 @@ class PlanDisplayCard extends StatefulWidget {
                   // Left - Profile Picture
                   Expanded(
                     flex: 1,
-                    child: IconButton(
-                      iconSize: imageSize,
-                      icon: const Icon(Icons.add_photo_alternate),
-                      onPressed: () {},
-                    ),
+                    child: Image.asset(cardImage, scale: 0.85),
                   ),
 
                   // Middle - Content
