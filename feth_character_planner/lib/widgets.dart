@@ -490,32 +490,56 @@ class PlanDisplayCard extends StatefulWidget {
                   // Left - Profile Picture
                   Expanded(
                     flex: 1,
-                    child: Image.asset(cardImage, scale: 0.85),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewCharPlans(
+                              plan: widget.plan,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Image.asset(cardImage, scale: 0.85),
+                    ),
                   ),
 
                   // Middle - Content
                   Expanded(
                     flex: 8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: AppTextSizes.heading(context),
-                            fontWeight: FontWeight.bold,
-                            color: theme.surface,
-                            height: 1.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewCharPlans(
+                              plan: widget.plan,
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Scrollbar(
-                            controller: _scrollController,
-                            child: content,
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: AppTextSizes.heading(context),
+                              fontWeight: FontWeight.bold,
+                              color: theme.surface,
+                              height: 1.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          Expanded(
+                            child: Scrollbar(
+                              controller: _scrollController,
+                              child: content,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ),
 
                   // Right - Action Buttons
@@ -530,7 +554,17 @@ class PlanDisplayCard extends StatefulWidget {
                           color: theme.icon,
                           iconSize: iconSize,
                           tooltip: "Edit",
-                          onPressed: () {},
+                          onPressed: () {
+                            // CHANGE TO EDIT CHARACTER PLANS
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewCharPlans(
+                                  plan: widget.plan,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         IconButton(
                           icon: const Icon(Icons.import_export),

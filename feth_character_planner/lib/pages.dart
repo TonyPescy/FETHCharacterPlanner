@@ -219,15 +219,46 @@ class _MyPlansPageState extends State<MyPlansPage> {
 // ViewHousePlansPage End
 
 // ViewCharPlansPage Start
-  class ViewCharPlans extends StatelessWidget {
-    const ViewCharPlans({super.key});
+  class ViewCharPlans extends StatefulWidget {
+    final Plan plan;
+
+    const ViewCharPlans({
+      super.key,
+      required this.plan,
+      });
+
     // routeName for current page checking
     static const routeName = "/view_char_plan";
 
-    @override
-      Widget build(BuildContext context) {
-      //: implement build
-    throw UnimplementedError();
-      }
+  @override
+  State<ViewCharPlans> createState() => _ViewCharPlansState();
+}
+
+class _ViewCharPlansState extends State<ViewCharPlans> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadPlan();
   }
+
+  void loadPlan() {
+    // Load the selected plan here
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyTopBar(
+        title: "My ${widget.plan.name} Plan",
+        height: AppSizes.topBarHeight(context),
+      ),
+
+      body: Center(
+        child: Text("Character Plan"),
+      ),
+    );
+  }
+}
 // ViewCharPlansPage End
